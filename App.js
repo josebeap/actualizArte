@@ -8,6 +8,7 @@ export default function App() {
       <Text>Hola aqui reportandose otro loco Att: Nicolas</Text>
       <Text>Sin mente como los locos Att: Miguel</Text>
       <Text>Hola, Buenas tardes, Cómo están? Att: Edwar Marin</Text>
+      <text>Comentario de Jhohan Stiwar Giraldo</text>
       <StatusBar style='auto' />
     </View>
   );
