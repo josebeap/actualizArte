@@ -7,6 +7,7 @@ export default function App() {
       <Text>Hola Mundo Jose</Text>
       <Text>Hola aqui reportandose otro loco Att: Nicolas</Text>
       <Text>Sin mente como los locos Att: Miguel</Text>
+      <Text>Hola, Buenas tardes, Cómo están? Att: Edwar Marin</Text>
       <StatusBar style='auto' />
     </View>
   );
