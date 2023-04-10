@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export {RecursoScreen}
+export { RecursoScreen }

@@ -4,12 +4,16 @@ import { createNativeStackNavigator  } from "@react-navigation/native-stack";
 
 import { RecursoScreen } from "./screens/recursoScreen";
 import { ProductoScreen } from "./screens/productoScreen";
+import { CategoriaScreen } from "./screens/categoriaScreen";
+import { Home } from "./screens/Home";
 
 const Stack = createNativeStackNavigator();
 
 function ActualizArteStack(){
   return ( 
     <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Categoria" component={CategoriaScreen} />
         <Stack.Screen name="Recurso" component={RecursoScreen} />
         <Stack.Screen name="Producto" component={ProductoScreen} />
     </Stack.Navigator>
