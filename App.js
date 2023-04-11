@@ -1,16 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator  } from "@react-navigation/native-stack";
+
+import { RecursoScreen } from "./screens/recursoScreen";
+import { ProductoScreen } from "./screens/productoScreen";
+import { CategoriaScreen } from "./screens/categoriaScreen";
+import { Home } from "./screens/Home";
+
+const Stack = createNativeStackNavigator();
+
+function ActualizArteStack(){
+  return ( 
+    <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Categoria" component={CategoriaScreen} />
+        <Stack.Screen name="Recurso" component={RecursoScreen} />
+        <Stack.Screen name="Producto" component={ProductoScreen} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hola Mundo Jose</Text>
-      <Text>Hola aqui reportandose otro loco Att: Nicolas</Text>
-      <Text>Sin mente como los locos Att: Miguel</Text>
-      <Text>Hola, Buenas tardes, Cómo están? Att: Edwar Marin</Text>
-      <Text>Comentario de Jhohan Stiwar Giraldo</Text>
-      <StatusBar style='auto' />
-    </View>
+    <NavigationContainer>
+      <ActualizArteStack/>
+    </NavigationContainer>
   );
 }
 
