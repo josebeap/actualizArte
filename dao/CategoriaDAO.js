@@ -1,5 +1,5 @@
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { Categoria } from "../models/CategoriaModel";
 
 class CategoriaDAO {
@@ -9,17 +9,12 @@ class CategoriaDAO {
         return collection(FIRESTORE_DB, 'Categoria');;
     }
 
-    // Método para obtener las categorias filtradas por nombre
-    static async findByName(nombreCat) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'Categoria'));
-        const categorias = [];
-        snapshot.forEach(doc => {
-            const {nombre} = doc.data();
-            if (nombre == nombreCat){
-                categorias.push(new Categoria(doc.id, nombre));
-            }
-        });
-        return categorias;
+    // Método para obtener una categoria por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `Categoria/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        return new Categoria(documento.id, datos.nombre);
     }
 
     // Método para insertar un producto en Firebase

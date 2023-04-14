@@ -8,6 +8,7 @@ const CategoriaScreen = (props) => {
 
     const [categorias, setcategorias] = useState([]);
     const [nombre, setNombre] = useState('');
+    const [identificador, setIdentificador] = useState('');
 
     useEffect(() => {
         const categoriaRef = CategoriaDAO.getCollection();
@@ -44,6 +45,12 @@ const CategoriaScreen = (props) => {
         //props.navigation.navigate('Categoria');
     };
 
+    const handleFindById = async id => {
+        console.log(await CategoriaDAO.findById(id));
+        setIdentificador('');
+        //props.navigation.navigate('Categoria');
+    };
+
     return (
         <ScrollView style={styles.container}>
             <Text>Lista de Categorias:</Text>
@@ -61,6 +68,10 @@ const CategoriaScreen = (props) => {
             <TextInput placeholder="Nombre" 
                 onChangeText={(value) => setNombre({nombre: value})} />
             <Button title="Agregar" onPress={handleInsert} />
+
+            <TextInput placeholder="Buscar"
+                onChangeText={(value) => setIdentificador({identificador: value})} />
+            <Button title="Buscar" onPress={() => handleFindById(identificador.identificador)} />
         </ScrollView>
         );
 }
