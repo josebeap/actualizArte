@@ -1,5 +1,5 @@
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
 
 class MateriaPrimaDAO {
@@ -9,20 +9,15 @@ class MateriaPrimaDAO {
         return collection(FIRESTORE_DB, 'MateriaPrima');;
     }
 
-    // Método para obtener las categorias filtradas por nombre
-    static async findByNombre(nombreMatPri) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'MateriaPrima'));
-        const materiasprima = [];
-        snapshot.forEach(doc => {
-            const {nombre, precio, cantidadStock, cantidadUsadaTotal, usadaUltimoTrimestre} = doc.data();
-            if (nombre == nombreMatPri){
-                const matPrima = new MateriaPrima(doc.id, nombre, precio, cantidadStock);
-                matPrima.setCantidadVendidaTotal(cantidadUsadaTotal);
-                matPrima.setVendidoUltimoTrimestre(usadaUltimoTrimestre);
-                materiasprima.push(matPrima);
-            }
-        });
-        return materiasprima;
+    // Método para obtener una materia prima por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `MateriaPrima/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        const matPrima = new MateriaPrima(documento.id, datos.nombre, datos.precio, datos.cantidadStock);
+        matPrima.setCantidadVendidaTotal(datos.cantidadUsadaTotal);
+        matPrima.setVendidoUltimoTrimestre(datos.usadaUltimoTrimestre);
+        return matPrima;
     }
 
     // Método para insertar un materiaprima en Firebase

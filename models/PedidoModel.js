@@ -44,11 +44,11 @@ class Pedido {
         this._precioTotal = value;
     }
 
-    addProducto(value) {
+    addMateriaPrima(value) {
         this._materiaPrimaList.push(value);
     }
 
-    dropProducto(value) {
+    dropMateriaPrima(value) {
         this._materiaPrimaList.slice(this._materiaPrimaList.indexOf(value), 1);
     }
 

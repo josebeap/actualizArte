@@ -1,5 +1,5 @@
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { Cliente } from "../models/ClienteModel";
 
 class ClienteDAO {
@@ -9,17 +9,14 @@ class ClienteDAO {
         return collection(FIRESTORE_DB, 'Cliente');;
     }
 
-    // Método para obtener las categorias filtradas por nombre
-    static async findByNombre(nombreCli) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'Cliente'));
-        const clientes = [];
-        snapshot.forEach(doc => {
-            const {cedula, nombre, telefono, direccion, correo} = doc.data();
-            if (nombre == nombreCli){
-                clientes.push(new Cliente(doc.id, cedula, nombre, telefono, direccion, correo));
-            }
-        });
-        return clientes;
+    // Método para obtener un cliente por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `Cliente/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        const cliente = new Cliente(documento.id, datos.cedula, 
+            datos.nombre, datos.telefono, datos.direccion, datos.correo);
+        return cliente;
     }
 
     // Método para insertar un producto en Firebase

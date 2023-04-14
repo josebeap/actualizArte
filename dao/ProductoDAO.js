@@ -1,5 +1,5 @@
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { Producto } from "../models/ProductoModel";
 
 class ProductoDAO {
@@ -9,20 +9,16 @@ class ProductoDAO {
         return collection(FIRESTORE_DB, 'Producto');;
     }
 
-    // Método para obtener las categorias filtradas por nombre
-    static async findByNombre(nombrePro) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'Producto'));
-        const productos = [];
-        snapshot.forEach(doc => {
-            const {nombre, descripcion, imagen, categoria, precio, cantidadStock, cantidadVendidaTotal, vendidoUltimoTrimestre} = doc.data();
-            if (nombre == nombrePro){
-                const producto = new Producto(doc.id, nombre, descripcion, imagen, categoria, precio, cantidadStock);
-                producto.setCantidadVendidaTotal(cantidadVendidaTotal);
-                producto.setVendidoUltimoTrimestre(vendidoUltimoTrimestre);
-                productos.push(producto);
-            }
-        });
-        return productos;
+    // Método para obtener un producto por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `Producto/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        const producto = new Producto(documento.id, datos.nombre, datos.descripcion, 
+            datos.imagen, datos.categoria, datos.precio, datos.cantidadStock);
+        producto.setCantidadVendidaTotal(datos.cantidadVendidaTotal);
+        producto.setVendidoUltimoTrimestre(datos.vendidoUltimoTrimestre);
+        return producto;
     }
 
     // Método para insertar un producto en Firebase

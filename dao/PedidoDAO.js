@@ -9,20 +9,15 @@ class PedidoDAO {
         return collection(FIRESTORE_DB, 'Pedido');;
     }
 
-    // Método para obtener los pedidos filtradas por codigo
-    static async findBycode(codePed) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'Pedido'));
-        const pedidos = [];
-        snapshot.forEach(doc => {
-            const {codigo, fecha, proveedor, precioTotal, materiasPrimaList} = doc.data();
-            if (codigo == codePed){
-                const pedido = new Pedido(doc.id, codigo, fecha, proveedor);
-                pedido.setPrecioTotal(precioTotal);
-                materiasPrimaList.forEach(matPri => pedido.addProducto(matPri))
-                pedidos.push(pedido);
-            }
-        });
-        return pedidos;
+    // Método para obtener un pedido por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `Pedido/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        const pedido = new Pedido(documento.id, datos.codigo, datos.fecha, datos.proveedor);
+        pedido.setPrecioTotal(datos.precioTotal);
+        //materiasPrimaList.forEach(matPri => pedido.addMateriaPrima(matPri))
+        return pedido;
     }
 
     // Método para insertar un pedido en Firebase

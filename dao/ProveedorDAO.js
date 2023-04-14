@@ -9,17 +9,14 @@ class ProveedorDAO {
         return collection(FIRESTORE_DB, 'Proveedor');;
     }
 
-    // Método para obtener las categorias filtradas por nombre
-    static async find(nombrePro) {
-        const snapshot = await getDocs(collection(FIRESTORE_DB, 'Proveedor'));
-        const proveedores = [];
-        snapshot.forEach(doc => {
-            const {nit, nombre, telefono, direccion, correo} = doc.data();
-            if (nombre == nombrePro){
-                proveedores.push(new Proveedor(doc.id, nit, nombre, telefono, direccion, correo));
-            }
-        });
-        return proveedores;
+    // Método para obtener un proveedor por el id
+    static async findById(Id) {
+        const ref = doc(FIRESTORE_DB, `Proveedor/${Id}`);
+        const documento = await getDoc(ref);
+        const datos = documento.data()
+        const proveedor = new Proveedor(documento.id, datos.nit, datos.nombre, 
+            datos.telefono, datos.direccion, datos.correo);
+        return proveedor;
     }
 
     // Método para insertar un producto en Firebase
