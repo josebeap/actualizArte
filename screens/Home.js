@@ -11,7 +11,9 @@ const Home = (props) => {
     return (
         <ScrollView style={styles.container}>
             <Button title="Categoria" onPress={() => handleProps('Categoria')} />
+            <Button title="Actualizar Inventario" onPress={() => handleProps('ActualizarInventario')} />
         </ScrollView>
+        
         );
 }
 
