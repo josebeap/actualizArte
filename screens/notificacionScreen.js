@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Button, Alert } from "react-native";
 import * as Notifications from "expo-notifications";
-
+//Notificación emergente
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
