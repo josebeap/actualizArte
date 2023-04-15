@@ -17,7 +17,7 @@ function ActualizArteStack(){
         <Stack.Screen name="Categoria" component={CategoriaScreen} />
         <Stack.Screen name="Recurso" component={RecursoScreen} />
         <Stack.Screen name="Producto" component={ProductoScreen} />
-        <Stack.Screen name="Ventas" component={VentaScreen} />
+        <Stack.Screen name="Venta" component={VentaScreen} />
     </Stack.Navigator>
   );
 }

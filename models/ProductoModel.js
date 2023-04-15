@@ -1,3 +1,4 @@
+import { Recurso  } from "../models/RecursoModel";
 class Producto extends Recurso {
     constructor(id, nombre, descripcion, imagen, categoria, precio, cantidadStock) {
       super(id, nombre, cantidadStock, precio);
