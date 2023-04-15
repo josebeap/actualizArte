@@ -23,6 +23,7 @@ const Home = (props) => {
         title='Notificacion'
         onPress={() => handleProps("Notificacion")}
       />
+      <Button title='Finanzas' onPress={() => handleProps("Finanzas")} />
     </ScrollView>
   );
 };
