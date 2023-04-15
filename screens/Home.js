@@ -1,33 +1,40 @@
-import  React, { useState, useEffect} from "react";
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
-
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 
 const Home = (props) => {
+  const handleProps = (nombre) => {
+    props.navigation.navigate(nombre);
+  };
 
-    const handleProps = nombre => {
-        props.navigation.navigate(nombre);
-    };
-
-    return (
-        <ScrollView style={styles.container}>
-            <Button title="Categoria" onPress={() => handleProps('Categoria')} />
-        </ScrollView>
-        );
-}
+  return (
+    <ScrollView style={styles.container}>
+      <Button title='Categoria' onPress={() => handleProps("Categoria")} />
+      <Button title='Venta' onPress={() => handleProps("Venta")} />
+      <Button title='Producto' onPress={() => handleProps("Producto")} />
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 35
-    },
+  container: {
+    flex: 1,
+    padding: 35,
+  },
 
-    inputGroup: {
-        flex: 1,
-        padding: 0,
-        marginBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
-    }
-})
+  inputGroup: {
+    flex: 1,
+    padding: 0,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+});
 
-export { Home }
+export { Home };
