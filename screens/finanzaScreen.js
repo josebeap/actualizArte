@@ -42,15 +42,13 @@ const FinanzasScreen = () => {
   useEffect(() => {}, [totalVendido]);
 
   return (
-    <div className="finanzas-container">
-      <h1 className="finanzas-titulo">Finanzas</h1>
-      <h2 className="finanzas-subtitulo">{new Date().toLocaleString('default', { month: 'long' })}</h2>
-      <h2 className="finanzas-subtitulo">Ganancias: {totalVendido}</h2>
-    </div>
+    <>
+      <Text>Finanzas</Text>
+      <Text>{new Date().toLocaleString("default", { month: "long" })}</Text>
+      <Text>Ganancias: {totalVendido}</Text>
+    </>
   );
 
-  const styles = StyleSheet.create({
-
-  })
+  const styles = StyleSheet.create({});
 };
 export { FinanzasScreen };
