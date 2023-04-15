@@ -27,6 +27,7 @@ const VentaScreen = () => {
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
 
+  //obtenemos los productos desde la base
   useEffect(() => {
     const fetchProductos = async () => {
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "Producto"));

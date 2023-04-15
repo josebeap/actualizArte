@@ -6,6 +6,7 @@ import { RecursoScreen } from "./screens/recursoScreen";
 import { ProductoScreen } from "./screens/productoScreen";
 import { CategoriaScreen } from "./screens/categoriaScreen";
 import { VentaScreen } from "./screens/ventaScreen";
+import { FinanzasScreen } from "./screens/finanzaScreen";
 import { Home } from "./screens/Home";
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ function ActualizArteStack(){
         <Stack.Screen name="Recurso" component={RecursoScreen} />
         <Stack.Screen name="Producto" component={ProductoScreen} />
         <Stack.Screen name="Venta" component={VentaScreen} />
+        <Stack.Screen name="Finanzas" component={FinanzasScreen} />
     </Stack.Navigator>
   );
 }
