@@ -1,7 +1,7 @@
 import { Recurso } from "./RecursoModel";
 
 class MateriaPrima extends Recurso {
-    constructor(id, nombre, cantidadStock, precio) {
+    constructor(id, nombre, precio, cantidadStock) {
       super(id, nombre, cantidadStock, precio);
       this._cantidadUsadaTotal = 0;
       this._usadaUltimoTrimestre = 0;

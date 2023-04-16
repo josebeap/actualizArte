@@ -25,13 +25,13 @@ class MateriaPrimaDAO {
         const docRef = await addDoc(collection(FIRESTORE_DB, 'MateriaPrima'), {
             nombre: materiaprima.getNombre.nombre,
             precio: materiaprima.getPrecio.precio,
-            cantidadstock: materiaprima.getCantidadStock.cantidadstock
+            cantidadStock: materiaprima.getCantidadStock.cantidadStock
         });
 
         const matPrima = new MateriaPrima(docRef.id, 
             materiaprima.getNombre.nombre,
             materiaprima.getPrecio.precio,
-            materiaprima.getCantidadStock.cantidadstock);
+            materiaprima.getCantidadStock.cantidadStock);
         return matPrima;
     }
 
@@ -41,7 +41,7 @@ class MateriaPrimaDAO {
         await updateDoc(ref, {
             nombre: materiaprima.getNombre,
             precio: materiaprima.getPrecio,
-            cantidadstock: materiaprima.getCantidadStock,
+            cantidadStock: materiaprima.getCantidadStock,
             cantidadUsadaTotal: materiaprima.getCantidadUsadaTotal,
             usadaUltimoTrimestre: materiaprima.getUsadaUltimoTrimestre,
         });

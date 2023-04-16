@@ -6,7 +6,7 @@ import { RecursoScreen } from "./screens/recursoScreen";
 import { ProductoScreen } from "./screens/productoScreen";
 import { CategoriaScreen } from "./screens/categoriaScreen";
 import { Home } from "./screens/Home";
-import { ActualizarInventarioScreen } from "./screens/actualizarInventarioScreen";
+import { ActualizarInventarioScreen } from "./screens/ActualizarInventarioScreen";
 
 const Stack = createNativeStackNavigator();
 
