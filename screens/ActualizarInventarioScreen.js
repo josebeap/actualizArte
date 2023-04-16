@@ -57,7 +57,6 @@ const ActualizarInventarioScreen = () => {
         const index = productos.findIndex(prod => prod.id === producto.id);
         setProductos([...productos.slice(0, index), producto, ...productos.slice(index + 1)]);
     };
-
     return (
         <ScrollView style={styles.container}>
             <Text>Lista de Productos:</Text>
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 35
     },
-
     inputGroup: {
         flex: 1,
         padding: 0,
@@ -120,7 +118,6 @@ const styles = StyleSheet.create({
     }
 })
     
-
 export {ActualizarInventarioScreen}
 
 
