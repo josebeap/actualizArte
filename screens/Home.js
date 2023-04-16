@@ -24,6 +24,7 @@ const Home = (props) => {
         onPress={() => handleProps("Notificacion")}
       />
       <Button title='Finanzas' onPress={() => handleProps("Finanzas")} />
+      <Button title="Actualizar Inventario" onPress={() => handleProps('ActualizarInventario')} />
     </ScrollView>
   );
 };

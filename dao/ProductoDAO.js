@@ -29,7 +29,7 @@ class ProductoDAO {
             imagen: producto.getImagen.imagen,
             categoria: producto.getCategoria.categoria,
             precio: producto.getPrecio.precio,
-            cantidadstock: producto.getCantidadStock.cantidadstock
+            cantidadStock: producto.getCantidadStock.cantidadStock
         });
         return new Producto(docRef.id, 
             producto.getNombre.nombre,
@@ -37,7 +37,7 @@ class ProductoDAO {
             producto.getImagen.imagen,
             producto.getCategoria.categoria,
             producto.getPrecio.precio,
-            producto.getCantidadStock.cantidadstock);
+            producto.getCantidadStock.cantidadStock);
     }
 
     // Método para actualizar un producto en Firebase
@@ -49,7 +49,7 @@ class ProductoDAO {
             imagen: producto.getImagen,
             categoria: producto.getCategoria,
             precio: producto.getPrecio,
-            cantidadstock: producto.getCantidadStock,
+            cantidadStock: producto.getCantidadStock,
             cantidadVendidaTotal: producto.getCantidadVendidaTotal,
             vendidoUltimoTrimestre: producto.getVendidoUltimoTrimestre
         });
