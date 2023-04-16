@@ -5,6 +5,8 @@ import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 const ActualizarInventarioScreen = () => {
 
@@ -62,42 +64,48 @@ const ActualizarInventarioScreen = () => {
         <ScrollView style={styles.container}>
             <Text>Lista de Productos:</Text>
             {productos.map((producto) => ( 
-                <View key={producto.getId}>
-                    <Text>{producto.getId} - {producto.getNombre}</Text>
-                    <Button title="+" onPress={() => 
-                        handleUpdateProducto( new Producto 
-                            (producto.getId, producto.getNombre, producto.getDescripcion, 
-                            producto.getImagen, producto.getCategoria, producto.getPrecio, 
-                            Number.parseInt(producto.getCantidadStock) + Number.parseInt(cantStock.cantStock) ))} />
+                <View key={producto.getId} style={styles.view}>
+                    <Text><strong>Nombre:</strong> {producto.getNombre}</Text>
+                    <Text><strong>Descripción:</strong> {producto.getDescripcion}</Text>
+                    <Text><strong>Precio:</strong> {producto.getPrecio}</Text>
+                    <Text><strong>Stock:</strong> {producto.getCantidadStock}</Text>
+                    
+                    <AntDesign name="pluscircle" size={24} color="black" 
+                        onPress={() => handleUpdateProducto( new Producto(producto.getId, 
+                            producto.getNombre, producto.getDescripcion, producto.getImagen, 
+                            producto.getCategoria, producto.getPrecio, 
+                            Number.parseInt(producto.getCantidadStock) + Number.parseInt(cantStock.cantStock) ))}/>
 
-                    <TextInput placeholder="Cantidad" 
+                    <TextInput placeholder="Cantidad" defaultValue="1"
                         onChangeText={(value) => setCantStock({cantStock: value})}/>
                     
-                    <Button title="-" onPress={() => 
+                    <AntDesign name="minuscircle" size={24} color="black" onPress={() => 
                         handleUpdateProducto( new Producto 
                             (producto.getId, producto.getNombre, producto.getDescripcion, 
                             producto.getImagen, producto.getCategoria, producto.getPrecio, 
-                            Number.parseInt(producto.getCantidadStock) - Number.parseInt(cantStock.cantStock)))} />
+                            Number.parseInt(producto.getCantidadStock) - Number.parseInt(cantStock.cantStock)))}/> 
                 </View>
             ))}
 
             <Text>Lista de Materias Primas:</Text>
             {materiasP.map(materia => ( 
-                <View key={materia.getId}>
-                    <Text>{materia.getId} - {materia.getNombre}</Text>
-                   
-                    <Button title="+" onPress={() => 
-                        handleUpdateMateria(new MateriaPrima
-                            (materia.getId, materia.getNombre, materia.getPrecio, 
-                            Number.parseFloat(materia.getCantidadStock + Number.parseInt(cantStock.cantStock))))}/>
+                <View key={materia.getId} style={styles.view}>
+                    <Text><strong>Nombre:</strong> {materia.getNombre}</Text>
+                    <Text><strong>Precio:</strong> {materia.getPrecio}</Text>
+                    <Text><strong>Stock:</strong> {materia.getCantidadStock}</Text>
+                    <AntDesign name="pluscircle" size={24} color="black" onPress={() => 
+                        handleUpdateMateria(new MateriaPrima(materia.getId, materia.getNombre, 
+                            materia.getPrecio, Number.parseFloat(materia.getCantidadStock + 
+                            Number.parseInt(cantStock.cantStock))))} />
 
                     <TextInput placeholder="Cantidad" 
                         onChangeText={(value) => setCantStock({cantStock: value})}/>
 
-                    <Button title="-" onPress={() => 
-                       handleUpdateMateria(new MateriaPrima
-                            (materia.getId, materia.getNombre, materia.getPrecio, 
-                            Number.parseFloat(materia.getCantidadStock) - Number.parseInt(cantStock.cantStock)))}/>
+                    <AntDesign name="minuscircle" size={24} color="black" onPress={() => 
+                        handleUpdateMateria(new MateriaPrima(materia.getId, materia.getNombre,
+                            materia.getPrecio, Number.parseFloat(materia.getCantidadStock) - 
+                            Number.parseInt(cantStock.cantStock)))}/>            
+                    
                 </View>                
             ))}
 
@@ -114,6 +122,15 @@ const styles = StyleSheet.create({
     inputGroup: {
         flex: 1,
         padding: 0,
+        marginBottom: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#cccccc'
+    },
+
+    view: {
+        flex: 1,
+        paddingBottom: 20,
+        paddingLeft: 15,
         marginBottom: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc'
