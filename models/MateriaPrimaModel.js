@@ -1,3 +1,5 @@
+import { Recurso } from "./RecursoModel";
+
 class MateriaPrima extends Recurso {
     constructor(id, nombre, cantidadStock, precio) {
       super(id, nombre, cantidadStock, precio);
@@ -15,11 +17,11 @@ class MateriaPrima extends Recurso {
     }
   
     // Métodos set
-    set setCantidadVendidaTotal(value) {
+    set setCantidadUsadaTotal(value) {
       this._cantidadUsadaTotal = value;
     }
   
-    set setVendidoUltimoTrimestre(value) {
+    set setUsadaUltimoTrimestre(value) {
       this._usadaUltimoTrimestre = value;
     }
   }
