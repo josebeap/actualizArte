@@ -7,10 +7,14 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Dimensions,
   Button,
 } from "react-native";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
+import estilos from "../style sheets/estilos";
+
+const windowWidth = Dimensions.get("window").width;
 
 // Creacion de la venta
 const VentaScreen = () => {
@@ -26,6 +30,8 @@ const VentaScreen = () => {
   const [precio, setPrecio] = useState(0);
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
+  const [mostrarLista, setMostrarLista] = useState("");
+  const [busqueda, setBusqueda] = useState("");
 
   //obtenemos los productos desde la base
   useEffect(() => {
@@ -40,91 +46,117 @@ const VentaScreen = () => {
     fetchProductos();
   }, []);
 
-  //Metodo que calcula el rpecio total
+  //Metodo que calcula el precio total
   const calcularTotal = () => {
     const resultado = cantidad * precio;
     setTotal(resultado);
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Ventas</Text>
+  //funcion para filtrar los productos segun el nombre ingresado
+  const productosFiltrados = productos.filter((producto) =>
+    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
-      <View style={styles.form}>
-        <Text style={styles.title}>Fecha: {fecha}</Text>
-        <Text style={styles.label}>Nombre del cliente:</Text>
+  console.log(productosFiltrados);
+
+  return (
+    <View style={estilos.container}>
+      <Text style={estilos.title}>Ventas</Text>
+
+      <View style={{...estilos.form}}>
+        <Text style={estilos.label}>Fecha: {fecha}</Text>
+        <Text style={estilos.label}>Nombre del cliente:</Text>
         <TextInput
-          style={styles.input}
+          style={estilos.input}
           placeholder="Nombre del cliente"
           keyboardType="default"
           value={nombreCliente}
           onFocus={() => setNombreCliente("")}
           onChangeText={setNombreCliente}
         />
-        <Text style={styles.label}>Documento del cliente:</Text>
+        <Text style={estilos.label}>Documento del cliente:</Text>
         <TextInput
-          style={styles.input}
+          style={estilos.input}
           placeholder="Documento del cliente"
           keyboardType="numeric"
           value={documentoCliente}
           onFocus={() => setDocumentoCliente("")}
           onChangeText={(text) => {
             // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
+            if (/^\d+$/.test(text) || text === "") {
               setDocumentoCliente(text);
             }
           }}
         />
-        <Text style={styles.label}>Cantidad:</Text>
+
         <TextInput
-          style={[styles.input, { fontSize: 16, height: 20 }]}
+          placeholder="Buscar productos por nombre"
+          value={busqueda}
+          onChangeText={setBusqueda}
+        />
+
+        <View style={{
+              ...estilos.container,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}>
+        <Text style={{ ...estilos.label, width: "50%",justifyContent: "space-between", }}>Productos: </Text>
+        <Text style={{ ...estilos.label, width: "50%",justifyContent: "space-between", }}>Precio: </Text>
+
+        </View>
+        
+        {productosFiltrados.map((producto) => (
+          <View
+            key={producto.id}
+            style={{
+              ...estilos.container,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ ...estilos.label, flexDirection: "row", width: "50%",justifyContent: "space-between", }}>Productos: </Text>
+            <Text style={{ width: "50%" }}>{producto.nombre}</Text>
+            <Text style={{ width: "50%", textAlign: "right" }}>
+              {producto.precio}
+            </Text>
+          </View>
+        ))}
+
+        <Text style={estilos.label}>Cantidad:</Text>
+        <TextInput
+          style={[estilos.input, { fontSize: 16, height: 20 }]}
           placeholder="Cantidad"
           keyboardType="numeric"
           value={cantidad}
           onFocus={() => setCantidad("")}
           onChangeText={(text) => {
             // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
+            if (/^\d+$/.test(text) || text === "") {
               setCantidad(text);
             }
           }}
         />
-        <Text style={styles.label}>Precio:</Text>
+        <Text style={estilos.label}>Precio:</Text>
         <TextInput
-          style={[styles.input, { fontSize: 16, height: 20 }]}
+          style={[estilos.input, { fontSize: 16, height: 20 }]}
           placeholder="Precio"
           keyboardType="numeric"
           value={precio}
           onFocus={() => setPrecio("")}
           onChangeText={(text) => {
             // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
+            if (/^\d+$/.test(text) || text === "") {
               setPrecio(text);
             }
           }}
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={calcularTotal}>
+      <TouchableOpacity style={estilos.button} onPress={calcularTotal}>
         <Text style={styles.buttonText}>Calcular Total</Text>
       </TouchableOpacity>
 
-      <Text style={styles.totalText}>Total: ${total}</Text>
-
-      <View style={styles.containerList}>
-        <FlatList
-          data={productos}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Text style={styles.itemid}>${item.id}</Text>
-              <Text style={styles.itemName}>{item.nombre}</Text>
-              <Text style={styles.itemPrice}>${item.precio}</Text>
-            </View>
-          )}
-          contentContainerStyle={styles.list}
-        />
-      </View>
+      <Text style={estilos.totalText}>Total: ${total}</Text>
     </View>
   );
 };
