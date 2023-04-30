@@ -3,18 +3,34 @@ import {
   View,
   Text,
   TextInput,
-  CheckBox,
+  SectionListRenderItem,
   StyleSheet,
   FlatList,
   TouchableOpacity,
   Dimensions,
   Button,
+  SafeAreaView,
+  SectionList,
+  StatusBar,
+  Select,
 } from "react-native";
+import PickerSelect from "react-native-picker-select";
+import { Platform } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
+import { AntDesign } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
+
+class Producto {
+  constructor(id, nombre, precio) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+  }
+}
 
 // Creacion de la venta
 const VentaScreen = () => {
@@ -26,13 +42,15 @@ const VentaScreen = () => {
   const [documentoCliente, setDocumentoCliente] = useState(
     "Ingresa el documento del cliente"
   );
-  const [cantidad, setCantidad] = useState(0);
+
   const [precio, setPrecio] = useState(0);
   const [total, setTotal] = useState(0);
   const [productos, setProductos] = useState([]);
   const [mostrarLista, setMostrarLista] = useState("");
   const [busqueda, setBusqueda] = useState("");
-
+  const [elementoSeleccionado, setElementoSeleccionado] = useState("1");
+  const [productosAVender, setproductosAVender] = useState({ "": 0 });
+  const [inputValue, setInputValue] = useState("");
   //obtenemos los productos desde la base
   useEffect(() => {
     const fetchProductos = async () => {
@@ -45,25 +63,81 @@ const VentaScreen = () => {
     };
     fetchProductos();
   }, []);
-
   //Metodo que calcula el precio total
-  const calcularTotal = () => {
-    const resultado = cantidad * precio;
-    setTotal(resultado);
-  };
+  const calcularTotal = () => {};
 
   //funcion para filtrar los productos segun el nombre ingresado
   const productosFiltrados = productos.filter((producto) =>
     producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  console.log(productosFiltrados);
+  
+
+  const renderProductosSeleccionados = ({ item }) => {
+    
+    if (!productosAVender.hasOwnProperty(item.nombre)) {
+      setproductosAVender((prevState) => ({
+        ...prevState,
+        [item.nombre]: 0,
+      }));
+    }
+    
+      console.log(productosAVender);
+    
+//    console.log(productosAVender);
+
+    const aumentarCantidad = () => {};
+    const disminuirCantidad = () => {};
+    const calcularPrecioVenta = () => {};
+
+    return (
+      <View style={{ ...estilos.containerOptions }}>
+        <Text>{item.nombre}</Text>
+        <View style={{ ...estilos.containerAccionesEnListas }}>
+          <TouchableOpacity
+            onPress={aumentarCantidad}
+            style={{ ...estilos.botonesEnListas }}
+          >
+            <AntDesign name="pluscircleo" size={24} color="green" />
+          </TouchableOpacity>
+          <TextInput
+            style={estilos.inputCantidades}
+            placeholder={"0"}
+            keyboardType="numeric"
+            value={productosAVender[item.nombre]|| ""}
+            onChangeText={(text) => {
+              // Verificar si el texto ingresado es un número
+              if (/^\d+$/.test(text) || text === "") {
+                setproductosAVender((prevState) => ({
+                  ...prevState,
+                  [item.nombre]: text,
+                }));
+                
+              }
+            }}
+            min="0"
+          />
+          <TouchableOpacity
+            onPress={disminuirCantidad}
+            style={{ ...estilos.botonesEnListas }}
+          >
+            <AntDesign name="minuscircle" size={24} color="red" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+  const mostrarDicc = ()=>{
+    for (let i in productosAVender) {
+      console.log(productosAVender[i]);
+    }
+  };
 
   return (
     <View style={estilos.container}>
       <Text style={estilos.title}>Ventas</Text>
 
-      <View style={{...estilos.form}}>
+      <View style={{ ...estilos.form }}>
         <Text style={estilos.label}>Fecha: {fecha}</Text>
         <Text style={estilos.label}>Nombre del cliente:</Text>
         <TextInput
@@ -88,73 +162,39 @@ const VentaScreen = () => {
             }
           }}
         />
-
-        <TextInput
-          placeholder="Buscar productos por nombre"
-          value={busqueda}
-          onChangeText={setBusqueda}
-        />
-
-        <View style={{
-              ...estilos.container,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}>
-        <Text style={{ ...estilos.label, width: "50%",justifyContent: "space-between", }}>Productos: </Text>
-        <Text style={{ ...estilos.label, width: "50%",justifyContent: "space-between", }}>Precio: </Text>
-
-        </View>
-        
-        {productosFiltrados.map((producto) => (
-          <View
-            key={producto.id}
-            style={{
-              ...estilos.container,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={{ ...estilos.label, flexDirection: "row", width: "50%",justifyContent: "space-between", }}>Productos: </Text>
-            <Text style={{ width: "50%" }}>{producto.nombre}</Text>
-            <Text style={{ width: "50%", textAlign: "right" }}>
-              {producto.precio}
-            </Text>
-          </View>
-        ))}
-
-        <Text style={estilos.label}>Cantidad:</Text>
-        <TextInput
-          style={[estilos.input, { fontSize: 16, height: 20 }]}
-          placeholder="Cantidad"
-          keyboardType="numeric"
-          value={cantidad}
-          onFocus={() => setCantidad("")}
-          onChangeText={(text) => {
-            // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === "") {
-              setCantidad(text);
-            }
-          }}
-        />
-        <Text style={estilos.label}>Precio:</Text>
-        <TextInput
-          style={[estilos.input, { fontSize: 16, height: 20 }]}
-          placeholder="Precio"
-          keyboardType="numeric"
-          value={precio}
-          onFocus={() => setPrecio("")}
-          onChangeText={(text) => {
-            // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === "") {
-              setPrecio(text);
-            }
-          }}
-        />
       </View>
 
-      <TouchableOpacity style={estilos.button} onPress={calcularTotal}>
-        <Text style={styles.buttonText}>Calcular Total</Text>
-      </TouchableOpacity>
+      <View>
+        <TextInput
+          style={estilos.input}
+          placeholder="Buscar productos por nombre"
+          value={busqueda}
+          onChangeText={(texto) => {
+            // Filtrar solo letras
+            let textoFiltrado = texto.replace(/[^a-zA-Z]/g, "");
+            // Actualizar el estado de busqueda
+            setBusqueda(textoFiltrado.toString());
+          }}
+          keyboardType="default"
+        />
+
+        {busqueda != "" && (
+          <View>
+            <FlatList
+              data={productosFiltrados}
+              renderItem={renderProductosSeleccionados}
+              key={(index) => index.toString()}
+            ></FlatList>
+            <TouchableOpacity
+              style={estilos.button}
+              onPress={mostrarDicc}
+            >
+              <Text style={styles.buttonText}>Aceptar</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
 
       <Text style={estilos.totalText}>Total: ${total}</Text>
     </View>

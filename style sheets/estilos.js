@@ -5,12 +5,45 @@ const windowWidth = Dimensions.get("window").width;
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f2f2f2",
-    paddingHorizontal: 20,
-    width: "90%",
+    alignItems: 'center',
+    backgroundColor: 'grey',
+    padding:10,
+    width: '100%',
+    
+
   },
+  containerOptions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    padding:10,
+    marginBottom: 20,
+    paddingHorizontal:10,
+    width: "100%",
+    justifyContent: 'space-between',
+  },
+
+  containerAccionesEnListas:{
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    alignContent: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 10,
+    backgroundColor: '#f2f2f2',
+    width:'35%',
+    
+
+    
+  },
+
+  botonesEnListas:{
+    flexDirection: "row",
+    alignItems: "baseline",
+    backgroundColor: 'grey',
+    paddingHorizontal: 5,
+    marginBottom: 5,
+  },
+
   title: {
     fontSize: windowWidth / 15,
     fontWeight: "bold",
@@ -26,9 +59,21 @@ const estilos = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "black",
     borderWidth: 1,
     marginBottom: 20,
+  },
+  botonesAgregarQuitar:{
+
+  },
+  inputCantidades: {
+    height: "25%",
+    width: "25%",
+    alignItems: 'center',
+    borderColor: "black",
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 2,
   },
   button: {
     backgroundColor: "blue",
