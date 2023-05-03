@@ -41,7 +41,6 @@ const VentaScreen = () => {
   const [productosAVender, setproductosAVender] = useState({ "": 0 });
   const terminarVenta = () => {
     calcularPrecioVenta();
-    setCODIGOVENTAS(CODIGOVENTAS+1);
     setBusqueda("");
   };
   const GuardarVenta = async () => {
@@ -186,10 +185,11 @@ const VentaScreen = () => {
           )}
         </View>
 
+        <Text style={estilos.totalText}>Total: ${precioVenta}</Text>
         <TouchableOpacity style={estilos.button} onPress={calcularPrecioVenta}>
           <Text style={estilos.buttonText}>Guardar venta</Text>
         </TouchableOpacity>
-        <Text style={estilos.totalText}>Total: ${precioVenta}</Text>
+        
       </View>
     
   );
