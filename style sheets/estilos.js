@@ -24,9 +24,9 @@ const estilos = StyleSheet.create({
   },
 
   containerAccionesEnListas:{
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    alignContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
     flexDirection: 'row',
     marginBottom: 10,
     backgroundColor: '#f2f2f2',
@@ -83,7 +83,7 @@ const estilos = StyleSheet.create({
     maxWidth: 400,
   },
   buttonText: {
-    color: "white",
+    color: "red",
     fontWeight: "bold",
   },
   totalText: {
