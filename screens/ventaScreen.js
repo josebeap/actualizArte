@@ -3,17 +3,29 @@ import {
   View,
   Text,
   TextInput,
-  CheckBox,
+  ScrollView,
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Dimensions,
   Button,
+  SafeAreaView,
+  Modal,
+  StatusBar,
+  Select,
 } from "react-native";
+import { VentaDAO } from "../dao/VentaDAO";
+import { Venta } from "../models/VentaModel";
+import { Platform } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
+import estilos from "../style sheets/estilos";
+import { AntDesign } from "@expo/vector-icons";
 
 // Creacion de la venta
 const VentaScreen = () => {
+  const [venta, setVenta] = useState([]);
   //definimos los atributos de la venta
   const [fecha, setFecha] = useState(new Date().toLocaleDateString()); // obtener la fecha actual y darle formato
   const [nombreCliente, setNombreCliente] = useState(
@@ -22,10 +34,23 @@ const VentaScreen = () => {
   const [documentoCliente, setDocumentoCliente] = useState(
     "Ingresa el documento del cliente"
   );
-  const [cantidad, setCantidad] = useState(0);
-  const [precio, setPrecio] = useState(0);
-  const [total, setTotal] = useState(0);
+
+  const [precioVenta, setprecioVenta] = useState(0);
   const [productos, setProductos] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [productosAVender, setproductosAVender] = useState({ "": 0 });
+  const terminarVenta = () => {
+    calcularPrecioVenta();
+    setBusqueda("");
+  };
+  const GuardarVenta = async () => {
+    const venta = new Venta(null, CODIGOVENTAS, fecha, nombreCliente);
+    const nuevaVenta = await VentaDAO.insert(venta);
+    setVenta([...venta, nuevaVenta]);
+    setNombre('');
+    //props.navigation.navigate('Categoria');
+};
+
 
   //obtenemos los productos desde la base
   useEffect(() => {
@@ -40,92 +65,133 @@ const VentaScreen = () => {
     fetchProductos();
   }, []);
 
-  //Metodo que calcula el rpecio total
-  const calcularTotal = () => {
-    const resultado = cantidad * precio;
-    setTotal(resultado);
+  //funcion para filtrar los productos segun el nombre ingresado
+  const productosFiltrados = productos.filter((producto) => {
+    if (!productosAVender.hasOwnProperty(producto.nombre)) {
+      setproductosAVender((prevState) => ({
+        ...prevState,
+        [producto.nombre]: ["", ""],
+      }));
+    }
+    return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
+  });
+
+  //Calculo del precio de la venta
+  const calcularPrecioVenta = () => {
+    let total = 0;
+    for (let i in productosAVender) {
+      if (i != "") {
+        let calvexProducto = productosAVender[i];
+        let valor =
+          parseFloat(calvexProducto[0]) * parseFloat(calvexProducto[1]);
+        if (valor > 0) {
+          total = valor + total;
+        }
+      }
+    }
+    setprecioVenta(total);
+  };
+
+  //renderizacion del diccionario con los productos filtrados
+  const renderProductosSeleccionados = ({ item }) => {
+    console.log(productosAVender);
+    return (
+      <View style={{ ...estilos.containerOptions }}>
+        <Text>{item.nombre}</Text>
+        <View style={{ ...estilos.containerAccionesEnListas }}>
+          <TextInput
+            style={estilos.inputCantidades}
+            placeholder={"0"}
+            keyboardType="numeric"
+            value={productosAVender[item.nombre][0] || ""}
+            onChangeText={(text) => {
+              // Verificar si el texto ingresado es un número
+              if (/^\d+$/.test(text) || text === "") {
+                setproductosAVender((prevState) => ({
+                  ...prevState,
+                  [item.nombre]: [text, item.precio],
+                }));
+              }
+            }}
+            min="0"
+          />
+        </View>
+      </View>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Ventas</Text>
+    
+      <View style={estilos.container}>
+        <Text style={estilos.title}>Ventas</Text>
 
-      <View style={styles.form}>
-        <Text style={styles.title}>Fecha: {fecha}</Text>
-        <Text style={styles.label}>Nombre del cliente:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nombre del cliente"
-          keyboardType="default"
-          value={nombreCliente}
-          onFocus={() => setNombreCliente("")}
-          onChangeText={setNombreCliente}
-        />
-        <Text style={styles.label}>Documento del cliente:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Documento del cliente"
-          keyboardType="numeric"
-          value={documentoCliente}
-          onFocus={() => setDocumentoCliente("")}
-          onChangeText={(text) => {
-            // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
-              setDocumentoCliente(text);
-            }
-          }}
-        />
-        <Text style={styles.label}>Cantidad:</Text>
-        <TextInput
-          style={[styles.input, { fontSize: 16, height: 20 }]}
-          placeholder="Cantidad"
-          keyboardType="numeric"
-          value={cantidad}
-          onFocus={() => setCantidad("")}
-          onChangeText={(text) => {
-            // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
-              setCantidad(text);
-            }
-          }}
-        />
-        <Text style={styles.label}>Precio:</Text>
-        <TextInput
-          style={[styles.input, { fontSize: 16, height: 20 }]}
-          placeholder="Precio"
-          keyboardType="numeric"
-          value={precio}
-          onFocus={() => setPrecio("")}
-          onChangeText={(text) => {
-            // Verificar si el texto ingresado es un número
-            if (/^\d+$/.test(text) || text === '') {
-              setPrecio(text);
-            }
-          }}
-        />
-      </View>
+        <View style={{ ...estilos.form }}>
+          <Text style={estilos.label}>Fecha: {fecha}</Text>
+          <Text style={estilos.label}>Nombre del cliente:</Text>
+          <TextInput
+            style={estilos.input}
+            placeholder="Nombre del cliente"
+            keyboardType="default"
+            value={nombreCliente}
+            onFocus={() => setNombreCliente("")}
+            onChangeText={setNombreCliente}
+          />
+          <Text style={estilos.label}>Documento del cliente:</Text>
+          <TextInput
+            style={estilos.input}
+            placeholder="Documento del cliente"
+            keyboardType="numeric"
+            value={documentoCliente}
+            onFocus={() => setDocumentoCliente("")}
+            onChangeText={(text) => {
+              // Verificar si el texto ingresado es un número
+              if (/^\d+$/.test(text) || text === "") {
+                setDocumentoCliente(text);
+              }
+            }}
+          />
+        </View>
 
-      <TouchableOpacity style={styles.button} onPress={calcularTotal}>
-        <Text style={styles.buttonText}>Calcular Total</Text>
-      </TouchableOpacity>
+        <View>
+          <TextInput
+            style={estilos.input}
+            placeholder="Buscar productos por nombre"
+            value={busqueda}
+            onChangeText={(texto) => {
+              // Filtrar solo letras
+              let textoFiltrado = texto.replace(/[^a-zA-Z]/g, "");
+              // Actualizar el estado de busqueda
+              setBusqueda(textoFiltrado.toString());
+            }}
+            keyboardType="default"
+          />
 
-      <Text style={styles.totalText}>Total: ${total}</Text>
-
-      <View style={styles.containerList}>
-        <FlatList
-          data={productos}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Text style={styles.itemid}>${item.id}</Text>
-              <Text style={styles.itemName}>{item.nombre}</Text>
-              <Text style={styles.itemPrice}>${item.precio}</Text>
+          {busqueda != "" && (
+            <View>
+              <FlatList
+                data={productosFiltrados}
+                renderItem={renderProductosSeleccionados}
+                keyExtractor={(item) => item.nombre.toString()}
+                ListFooterComponent={
+                  <TouchableOpacity
+                    style={estilos.button}
+                    onPress={terminarVenta}
+                  >
+                    <Text style={estilos.buttonText}>Aceptar</Text>
+                  </TouchableOpacity>
+                }
+              />
             </View>
           )}
-          contentContainerStyle={styles.list}
-        />
+        </View>
+
+        <Text style={estilos.totalText}>Total: ${precioVenta}</Text>
+        <TouchableOpacity style={estilos.button} onPress={calcularPrecioVenta}>
+          <Text style={estilos.buttonText}>Guardar venta</Text>
+        </TouchableOpacity>
+        
       </View>
-    </View>
+    
   );
 };
 
