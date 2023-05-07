@@ -11,6 +11,7 @@ import { VentaScreen } from "./screens/ventaScreen";
 import { FinanzasScreen } from "./screens/finanzaScreen";
 import { Home } from "./screens/Home";
 import { ActualizarInventarioScreen } from "./screens/ActualizarInventarioScreen";
+import { AgregarManualidadScreen } from "./screens/AgregarManualidadScreen" 
 import NotificacionScreen from "./screens/notificacionScreen";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +19,7 @@ const Stack = createNativeStackNavigator();
 function ActualizArteStack() {
   return (
     <Stack.Navigator>
-
+      <Stack.Screen name="AgregarManualidad" component={AgregarManualidadScreen} />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='Categoria' component={CategoriaScreen} />
       <Stack.Screen name='Recurso' component={RecursoScreen} />
