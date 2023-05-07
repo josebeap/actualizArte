@@ -6,7 +6,7 @@ import { async } from "@firebase/util";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ProductoScreen = () => {
-
+// definicion los estados  a los componentes de la vista
     const [recursos, setRecursos] = useState([])
     const [recurso, setRecurso] = useState({
         nombre: '',
