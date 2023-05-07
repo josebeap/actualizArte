@@ -20,6 +20,7 @@ function ActualizArteStack(){
   );
 }
 
+
 export default function App() {
   return (
     <TailwindProvider>
