@@ -20,10 +20,8 @@ function ActualizArteStack() {
     <Stack.Navigator>
       
       <Stack.Screen name='Home' component={Home} />
-      
-      <Stack.Screen name= 'ElementosconInventario' component={ElementosInvenDisponible}/>
-
       <Stack.Screen name='Categoria' component={CategoriaScreen} />
+      <Stack.Screen name= 'Inventario_disponible' component={ElementosInvenDisponible} />
       <Stack.Screen name='Recurso' component={RecursoScreen} />
       <Stack.Screen name="AgregarManualidad" component={AgregarManualidadScreen} />
       <Stack.Screen name='Producto' component={ProductoScreen} />
