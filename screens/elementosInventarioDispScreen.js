@@ -12,7 +12,6 @@ import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
-import { AntDesign } from "@expo/vector-icons";
 
 const elementosInvenDisponible = () => {
   const [materiasP, setMateriasP] = useState([]);
@@ -25,7 +24,7 @@ const elementosInvenDisponible = () => {
       next: (snapshot) => {
         const materiasP = [];
         snapshot.forEach((doc) => {
-          if(doc.data().cantidadStock>=0){
+          if (doc.data().cantidadStock >= 0) {
             const materiaPrim = new MateriaPrima(
               doc.id,
               doc.data().nombre,
@@ -34,7 +33,7 @@ const elementosInvenDisponible = () => {
             );
 
           }
-          
+
           (materiaPrim) =>
             materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
           (materiaPrim) =>
@@ -53,7 +52,7 @@ const elementosInvenDisponible = () => {
         const productos = [];
         snapshot.forEach((doc) => {
 
-          if(doc.data().cantidadStock>=0){
+          if (doc.data().cantidadStock >= 0) {
 
             const productoSnap = new Producto(
               doc.id,
@@ -85,7 +84,7 @@ const elementosInvenDisponible = () => {
     };
   }, []);
 
-  
+
   return (
     <ScrollView style={styles.container}>
       <Text>Lista de Productos:</Text>
@@ -109,9 +108,9 @@ const elementosInvenDisponible = () => {
           <TextInput
             placeholder='Cantidad'
             onChangeText={(value) => setCantStock({ cantStock: value })}
-          />
+          />  
 
-  
+
         </View>
       ))}
     </ScrollView>
