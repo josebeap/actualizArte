@@ -21,18 +21,9 @@ class VentaDAO {
     }
 
     // Método para insertar un venta en Firebase
-    static async insert(venta) {
-        const docRef = await addDoc(collection(FIRESTORE_DB, 'Venta'), {
-            nombre: venta.getNombre.nombre,
-            fecha: venta.getFecha.fecha,
-            cliente: venta.getCliente.cliente,
-            precioTotal: venta.getPrecioTotal.precioTotal,
-        });
-        return new Venta(docRef.id, 
-            venta.getNombre.nombre,
-            venta.getFecha.fecha,
-            venta.getCliente.cliente,
-            venta.getPrecioTotal.precioTotal);
+    static async insertarNuevaVenta(venta) {
+        const ventaRef = collection(FIRESTORE_DB, 'Venta');
+        await addDoc(ventaRef, venta);
     }
 
     // Método para actualizar un venta en Firebase

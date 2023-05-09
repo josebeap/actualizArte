@@ -3,25 +3,15 @@ import {
   View,
   Text,
   TextInput,
-  ScrollView,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions,
-  Button,
-  SafeAreaView,
-  Modal,
-  StatusBar,
-  Select,
-} from "react-native";
+  } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
-import { Platform } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
-import { AntDesign } from "@expo/vector-icons";
 
 // Creacion de la venta
 const VentaScreen = () => {
@@ -44,12 +34,16 @@ const VentaScreen = () => {
     setBusqueda("");
   };
   const GuardarVenta = async () => {
-    const venta = new Venta(null, CODIGOVENTAS, fecha, nombreCliente);
-    const nuevaVenta = await VentaDAO.insert(venta);
-    setVenta([...venta, nuevaVenta]);
-    setNombre('');
-    //props.navigation.navigate('Categoria');
-};
+    const options = {
+      cliente: nombreCliente,
+      fecha: fecha,
+      precioTotal: precioVenta,
+      productosList: productosAVender
+  };
+    const nuevaventa = new Venta(options);
+    await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
+    
+  };
 
 
   //obtenemos los productos desde la base
@@ -186,7 +180,7 @@ const VentaScreen = () => {
         </View>
 
         <Text style={estilos.totalText}>Total: ${precioVenta}</Text>
-        <TouchableOpacity style={estilos.button} onPress={calcularPrecioVenta}>
+        <TouchableOpacity style={estilos.button} onPress={GuardarVenta}>
           <Text style={estilos.buttonText}>Guardar venta</Text>
         </TouchableOpacity>
         
