@@ -12,6 +12,7 @@ import { Venta } from "../models/VentaModel";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
+import { useNavigation } from '@react-navigation/native';
 
 // Creacion de la venta
 const VentaScreen = () => {
@@ -24,7 +25,7 @@ const VentaScreen = () => {
   const [documentoCliente, setDocumentoCliente] = useState(
     "Ingresa el documento del cliente"
   );
-
+  const navigation = useNavigation();
   const [precioVenta, setprecioVenta] = useState(0);
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -33,16 +34,32 @@ const VentaScreen = () => {
     calcularPrecioVenta();
     setBusqueda("");
   };
-  const GuardarVenta = async () => {
+
+  //obtension de las opciones seleccionadas en la venta
+  const getOption = async () => {
+    const codigo = await VentaDAO.getNumeroVentas()+1;
+    const productosVendidos = await limpiarDiccionario(productosAVender)
+
     const options = {
       cliente: nombreCliente,
+      codigo: codigo,
       fecha: fecha,
       precioTotal: precioVenta,
-      productosList: productosAVender
+      productosList: productosVendidos
+    };
+    return options;
   };
-    const nuevaventa = new Venta(options);
-    await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
-    
+
+  //guardado de la venta nueva en la base
+  const GuardarVenta = async () => {
+    const options = await getOption();
+    console.log(options)
+    if (options.productosList){
+      const nuevaventa = new Venta(options);
+      await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
+      
+      navigation.goBack();
+    }
   };
 
 
@@ -70,6 +87,23 @@ const VentaScreen = () => {
     return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
   });
 
+  function limpiarDiccionario(dict) {
+    const cleanedDict = {};
+  for (const [key, value] of Object.entries(dict)) {
+    if (
+      key !== null &&
+      key !== '' &&
+      value !== null &&
+      value !== '' &&
+      (value[0] || value[1] != '')
+    ) {
+      cleanedDict[key] = value;
+    }
+  }
+  
+    return cleanedDict;
+  }
+
   //Calculo del precio de la venta
   const calcularPrecioVenta = () => {
     let total = 0;
@@ -84,6 +118,7 @@ const VentaScreen = () => {
       }
     }
     setprecioVenta(total);
+    limpiarDiccionario(productosAVender);
   };
 
   //renderizacion del diccionario con los productos filtrados

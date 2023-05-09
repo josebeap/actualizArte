@@ -1,12 +1,11 @@
 class Venta {
-  static numVentas = 0;
+  
     constructor(objOptions) {
       this._cliente = objOptions.cliente || '';
-      this._codigo = Venta.numVentas;
+      this._codigo = objOptions.codigo;
       this._fecha = objOptions.fecha;
       this._precioTotal = objOptions.precioTotal;
-      this._productosList = objOptions.precioTotal;
-      Venta.numVentas++;
+      this._productosList = objOptions.productosList || [];     
     }
   
     // Métodos get

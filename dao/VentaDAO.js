@@ -37,6 +37,12 @@ class VentaDAO {
         });
     }
 
+    //Metodo que obtiene la cantidad de ventas registradas
+    static async getNumeroVentas() {
+        const querySnapshot = await getDocs(collection(FIRESTORE_DB, 'Venta'));
+        return querySnapshot.size;
+      }
+
     // Método para eliminar un venta de Firebase
     static async delete(venta) {
         const ref = doc(FIRESTORE_DB, `Venta/${venta.getId}`);
