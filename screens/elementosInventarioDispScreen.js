@@ -13,7 +13,7 @@ import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
 
-const elementosInvenDisponible = () => {
+const ElementosInvenDisponible = () => {
   const [materiasP, setMateriasP] = useState([]);
   const [productos, setProductos] = useState([]);
   const [cantStock, setCantStock] = useState("");
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { elementosInvenDisponible };
+export { ElementosInvenDisponible };

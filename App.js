@@ -11,7 +11,7 @@ import { Home } from "./screens/Home";
 import { ActualizarInventarioScreen } from "./screens/ActualizarInventarioScreen";
 import { AgregarManualidadScreen } from "./screens/AgregarManualidadScreen" 
 import NotificacionScreen from "./screens/notificacionScreen";
-import { elementosInvenDisponible } from "./screens/elementosInventarioDispScreen";
+import { ElementosInvenDisponible } from "./screens/ElementosInventarioDispScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +21,7 @@ function ActualizArteStack() {
       
       <Stack.Screen name='Home' component={Home} />
       
-      <Stack.Screen name= 'ElementosconInventario' component={elementosInvenDisponible}/>
+      <Stack.Screen name= 'ElementosconInventario' component={ElementosInvenDisponible}/>
 
       <Stack.Screen name='Categoria' component={CategoriaScreen} />
       <Stack.Screen name='Recurso' component={RecursoScreen} />
