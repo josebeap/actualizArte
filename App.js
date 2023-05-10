@@ -18,8 +18,8 @@ const Stack = createNativeStackNavigator();
 function ActualizArteStack() {
   return (
     <Stack.Navigator>
-      
       <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name="AgregarManualidad" component={AgregarManualidadScreen} />
       <Stack.Screen name='Categoria' component={CategoriaScreen} />
       <Stack.Screen name='InventarioDisponible' component={ElementosInvenDisponible} />
       <Stack.Screen name='Recurso' component={RecursoScreen} />
