@@ -13,7 +13,7 @@ import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
 
-const ElementosInvenDisponible = () => {
+const ElementosInvenDisponible = (props) => {
   const [materiasP, setMateriasP] = useState([]);
   const [productos, setProductos] = useState([]);
   const [cantStock, setCantStock] = useState("");
