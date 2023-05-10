@@ -31,16 +31,14 @@ const ElementosInvenDisponible = (props) => {
               doc.data().precio,
               doc.data().cantidadStock
             );
-
+            (materiaPrim) =>
+              materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
+            (materiaPrim) =>
+              materiaPrim.setUsadaUltimoTrimestre(
+                doc.data().usadaUltimoTrimestre
+              );
+            materiasP.push(materiaPrim);
           }
-
-          (materiaPrim) =>
-            materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
-          (materiaPrim) =>
-            materiaPrim.setUsadaUltimoTrimestre(
-              doc.data().usadaUltimoTrimestre
-            );
-          materiasP.push(materiaPrim);
         });
         setMateriasP(materiasP);
       },
@@ -51,9 +49,7 @@ const ElementosInvenDisponible = (props) => {
       next: (snapshot) => {
         const productos = [];
         snapshot.forEach((doc) => {
-
           if (doc.data().cantidadStock >= 0) {
-
             const productoSnap = new Producto(
               doc.id,
               doc.data().nombre,
@@ -64,17 +60,16 @@ const ElementosInvenDisponible = (props) => {
               doc.data().cantidadStock
             );
 
+            (productoSnap) =>
+              productoSnap.setCantidadVendidaTotal(
+                doc.data().cantidadVendidaTotal
+              );
+            (productoSnap) =>
+              productoSnap.setVendidoUltimoTrimestre(
+                doc.data().vendidoUltimoTrimestre
+              );
+            productos.push(productoSnap);
           }
-
-          (productoSnap) =>
-            productoSnap.setCantidadVendidaTotal(
-              doc.data().cantidadVendidaTotal
-            );
-          (productoSnap) =>
-            productoSnap.setVendidoUltimoTrimestre(
-              doc.data().vendidoUltimoTrimestre
-            );
-          productos.push(productoSnap);
         });
         setProductos(productos);
       },
@@ -108,7 +103,7 @@ const ElementosInvenDisponible = (props) => {
           <TextInput
             placeholder='Cantidad'
             onChangeText={(value) => setCantStock({ cantStock: value })}
-          />  
+          />
 
 
         </View>
@@ -116,8 +111,6 @@ const ElementosInvenDisponible = (props) => {
     </ScrollView>
   );
 };
-
-export { ElementosInvenDisponible };
 
 const styles = StyleSheet.create({
   container: {
@@ -143,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export { ElementosInvenDisponible };
