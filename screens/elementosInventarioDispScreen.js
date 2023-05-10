@@ -96,7 +96,7 @@ const ElementosInvenDisponible = (props) => {
       <Text>Lista de Materias Primas:</Text>
       {materiasP.map((materia) => (
         <View key={materia.getId} style={styles.view}>
-          <Text>Nombre: {materia.getNombre}</Text>
+          <Text>Nombre: {materia.getNombre}</Text> 
           <Text>Precio: {materia.getPrecio}</Text>
           <Text>Stock: {materia.getCantidadStock}</Text>
 
