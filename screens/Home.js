@@ -15,16 +15,14 @@ const Home = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Button title='Categoria' onPress={() => handleProps("Categoria")} />
-      <Button title='Venta' onPress={() => handleProps("Venta")} />
-      <Button title='Producto' onPress={() => handleProps("Producto")} />
-      <Button title='Recurso' onPress={() => handleProps("Recurso")} />
-      <Button
-        title='Notificacion'
-        onPress={() => handleProps("Notificacion")}
-      />
-      <Button title='Finanzas' onPress={() => handleProps("Finanzas")} />
-      <Button title="Actualizar Inventario" onPress={() => handleProps('ActualizarInventario')} />
+      <Button title='Categoria'    onPress={() => handleProps("Categoria")} />
+      <Button title='Venta'        onPress={() => handleProps("Venta")} />
+      <Button title='Producto'     onPress={() => handleProps("Producto")} />
+      <Button title='Recurso'      onPress={() => handleProps("Recurso")} />
+      <Button title='Notificacion' onPress={() => handleProps("Notificacion")} />
+      <Button title='Finanzas'     onPress={() => handleProps("Finanzas")} />
+      <Button title='Elementos Inventario' onPress={() => handleProps("InventarioDisponible")} />
+      <Button title='Actualizar Inventario' onPress={() => handleProps("ActualizarInventario")} />
     </ScrollView>
   );
 };
