@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from "react-native";
 import React, { useState } from "react";
 import { imageFunctions } from "../generalFunctions/imageFunctions";
+import { TextInput } from "react-native-web";
 
 const AgregarManualidadScreen = () => {
 
@@ -20,13 +21,12 @@ const AgregarManualidadScreen = () => {
         setImage(null);
     };
 
-    const handleGetImage = async (fileName) => {
-        const img = await imageFunctions.getImage(fileName);
-        setUrl(img);
-    }
+    
 
     return (
         <SafeAreaView style={styles.container}>
+            <TextInput placeholder="Nombre"/>
+            <TextInput placeholder="Descripción"/>
             <TouchableOpacity style={styles.selectButton} onPress={handlePickImage}>
                 <Text style={styles.buttonText}>
                     Seleccionar Imagen
@@ -40,14 +40,9 @@ const AgregarManualidadScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.imageContainer}>
-                <Image source={{uri: url}} style={{ width: 150, height: 150}}/>
-                <TouchableOpacity style={styles.uploadButton} onPress={() => handleGetImage('Z')}>
-                    <Text style={styles.buttonText}>
-                        Obtener Imagen
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <TextInput placeholder="Categoria"/>
+            <TextInput placeholder="Precio"/>
+            <TextInput placeholder="Cantidad"/>
         </SafeAreaView>
     )
 }

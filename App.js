@@ -18,8 +18,9 @@ const Stack = createNativeStackNavigator();
 function ActualizArteStack() {
   return (
     <Stack.Navigator>
+    <Stack.Screen name="AgregarManualidad" component={AgregarManualidadScreen} />
       <Stack.Screen name='Home' component={Home} />
-      <Stack.Screen name="AgregarManualidad" component={AgregarManualidadScreen} />
+      
       <Stack.Screen name='Categoria' component={CategoriaScreen} />
       <Stack.Screen name='InventarioDisponible' component={ElementosInvenDisponible} />
       <Stack.Screen name='Recurso' component={RecursoScreen} />
@@ -46,7 +47,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
