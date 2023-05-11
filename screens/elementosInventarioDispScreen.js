@@ -13,7 +13,7 @@ import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
 
-const ElementosInvenDisponible = () => {
+const ElementosInvenDisponible = (props) => {
   const [materiasP, setMateriasP] = useState([]);
   const [productos, setProductos] = useState([]);
   const [cantStock, setCantStock] = useState("");
@@ -31,16 +31,14 @@ const ElementosInvenDisponible = () => {
               doc.data().precio,
               doc.data().cantidadStock
             );
-
+            (materiaPrim) =>
+              materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
+            (materiaPrim) =>
+              materiaPrim.setUsadaUltimoTrimestre(
+                doc.data().usadaUltimoTrimestre
+              );
+            materiasP.push(materiaPrim);
           }
-
-          (materiaPrim) =>
-            materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
-          (materiaPrim) =>
-            materiaPrim.setUsadaUltimoTrimestre(
-              doc.data().usadaUltimoTrimestre
-            );
-          materiasP.push(materiaPrim);
         });
         setMateriasP(materiasP);
       },
@@ -51,9 +49,7 @@ const ElementosInvenDisponible = () => {
       next: (snapshot) => {
         const productos = [];
         snapshot.forEach((doc) => {
-
           if (doc.data().cantidadStock >= 0) {
-
             const productoSnap = new Producto(
               doc.id,
               doc.data().nombre,
@@ -64,17 +60,16 @@ const ElementosInvenDisponible = () => {
               doc.data().cantidadStock
             );
 
+            (productoSnap) =>
+              productoSnap.setCantidadVendidaTotal(
+                doc.data().cantidadVendidaTotal
+              );
+            (productoSnap) =>
+              productoSnap.setVendidoUltimoTrimestre(
+                doc.data().vendidoUltimoTrimestre
+              );
+            productos.push(productoSnap);
           }
-
-          (productoSnap) =>
-            productoSnap.setCantidadVendidaTotal(
-              doc.data().cantidadVendidaTotal
-            );
-          (productoSnap) =>
-            productoSnap.setVendidoUltimoTrimestre(
-              doc.data().vendidoUltimoTrimestre
-            );
-          productos.push(productoSnap);
         });
         setProductos(productos);
       },
@@ -108,7 +103,7 @@ const ElementosInvenDisponible = () => {
           <TextInput
             placeholder='Cantidad'
             onChangeText={(value) => setCantStock({ cantStock: value })}
-          />  
+          />
 
 
         </View>
@@ -116,8 +111,6 @@ const ElementosInvenDisponible = () => {
     </ScrollView>
   );
 };
-
-export { ElementosInvenDisponible };
 
 const styles = StyleSheet.create({
   container: {
@@ -143,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export { ElementosInvenDisponible };
