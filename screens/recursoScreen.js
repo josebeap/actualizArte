@@ -2,6 +2,11 @@ import  React, { useState } from "react";
 import { View, TextInput, Button, ScrollView, StyleSheet } from "react-native";
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
 import { addDoc, collection } from "firebase/firestore";
+import estilos from "../style sheets/estilos";
+import {
+    Text,
+    TouchableOpacity,
+  } from "react-native";
 
 const RecursoScreen = (props) => {
 
@@ -38,7 +43,16 @@ const RecursoScreen = (props) => {
                     onChangeText={(value) => handleChangeText("cantidadStock", value)} 
                     placeholder="Cantidad en Stock"/>
 
-                <Button title="Actualizar" onPress={() => addRecurso()}/>
+                
+               
+               
+                <TouchableOpacity
+                style={estilos.botonHome}
+                onPress={() => addRecurso()}
+                >
+                    <Text style={estilos.buttonText}>ACTUALIZAR</Text>
+                </TouchableOpacity>
+
             </View>
         </ScrollView>
         );
@@ -47,7 +61,8 @@ const RecursoScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 35
+        padding: 35,
+        backgroundColor:"#f2e1c6",
     },
 
     inputGroup: {
@@ -56,7 +71,16 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc'
-    }
+    },
+    view: {
+        backgroundColor:"#f4c67f",
+        flex: 1,
+        paddingBottom: 20,
+        paddingLeft: 15,
+        marginBottom: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: "#cccccc",
+      },
 })
 
 export { RecursoScreen }
