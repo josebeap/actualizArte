@@ -3,26 +3,17 @@ import {
   View,
   Text,
   TextInput,
-  ScrollView,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions,
-  Button,
-  SafeAreaView,
-  Modal,
-  StatusBar,
-  Select,
-} from "react-native";
+  } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
-import { Platform } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
-import { AntDesign } from "@expo/vector-icons";
-
+import { useNavigation } from '@react-navigation/native';
+import { Timestamp } from 'firebase/firestore';
 // Creacion de la venta
 const VentaScreen = () => {
   const [venta, setVenta] = useState([]);
@@ -34,7 +25,7 @@ const VentaScreen = () => {
   const [documentoCliente, setDocumentoCliente] = useState(
     "Ingresa el documento del cliente"
   );
-
+  const navigation = useNavigation();
   const [precioVenta, setprecioVenta] = useState(0);
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -43,13 +34,38 @@ const VentaScreen = () => {
     calcularPrecioVenta();
     setBusqueda("");
   };
+
+  //obtension de las opciones seleccionadas en la venta
+  const getOption = async () => {
+    const codigo = await VentaDAO.getNumeroVentas()+1;
+    const productosVendidos = await limpiarDiccionario(productosAVender)
+
+    const options = {
+      cliente: nombreCliente,
+      codigo: codigo,
+      fecha: fecha,
+      precioTotal: precioVenta,
+      productosList: productosVendidos
+    };
+    return options;
+  };
+
+  //guardado de la venta nueva en la base
   const GuardarVenta = async () => {
-    const venta = new Venta(null, CODIGOVENTAS, fecha, nombreCliente);
-    const nuevaVenta = await VentaDAO.insert(venta);
-    setVenta([...venta, nuevaVenta]);
-    setNombre('');
-    //props.navigation.navigate('Categoria');
-};
+    const options = await getOption();
+    console.log(options)
+    if (options.productosList){
+      const fechaTimestamp = Timestamp.fromDate(new Date(options.fecha));
+      const nuevaventa = new Venta({
+        ...options,
+        fecha: fechaTimestamp,
+      });
+
+      await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
+      
+      navigation.goBack();
+    }
+  };
 
 
   //obtenemos los productos desde la base
@@ -76,6 +92,23 @@ const VentaScreen = () => {
     return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
   });
 
+  function limpiarDiccionario(dict) {
+    const cleanedDict = {};
+  for (const [key, value] of Object.entries(dict)) {
+    if (
+      key !== null &&
+      key !== '' &&
+      value !== null &&
+      value !== '' &&
+      (value[0] || value[1] != '')
+    ) {
+      cleanedDict[key] = value;
+    }
+  }
+  
+    return cleanedDict;
+  }
+
   //Calculo del precio de la venta
   const calcularPrecioVenta = () => {
     let total = 0;
@@ -90,6 +123,7 @@ const VentaScreen = () => {
       }
     }
     setprecioVenta(total);
+    limpiarDiccionario(productosAVender);
   };
 
   //renderizacion del diccionario con los productos filtrados
@@ -186,7 +220,7 @@ const VentaScreen = () => {
         </View>
 
         <Text style={estilos.totalText}>Total: ${precioVenta}</Text>
-        <TouchableOpacity style={estilos.button} onPress={calcularPrecioVenta}>
+        <TouchableOpacity style={estilos.button} onPress={GuardarVenta}>
           <Text style={estilos.buttonText}>Guardar venta</Text>
         </TouchableOpacity>
         
