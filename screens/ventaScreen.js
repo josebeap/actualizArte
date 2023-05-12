@@ -187,9 +187,10 @@ const VentaScreen = () => {
         </View>
 
         <View>
-          <TextInput
+          <TextInput 
             style={estilos.input}
-            placeholder="Buscar productos por nombre"
+            placeholder="Buscar productos por nombre" 
+            
             value={busqueda}
             onChangeText={(texto) => {
               // Filtrar solo letras

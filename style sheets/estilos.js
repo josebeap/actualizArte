@@ -15,7 +15,7 @@ const estilos = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'grey',
+    backgroundColor: "#f2e1c6",
     padding:10,
     width: '100%',
     
@@ -67,8 +67,13 @@ const estilos = StyleSheet.create({
     height: 40,
     borderColor: "black",
     borderWidth: 1,
+    textAlign: 'center',
     marginBottom: 20,
+    
+      
+  
   },
+  
   botonesAgregarQuitar:{
 
   },

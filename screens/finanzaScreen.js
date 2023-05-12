@@ -8,7 +8,7 @@ import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { View, Text, StyleSheet,Button  } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { onSnapshot } from "firebase/firestore";
-import { BarChart } from 'react-native-chart-kit';
+//import { BarChart } from 'react-native-chart-kit';
 
 
 const FinanzasScreen = () => {

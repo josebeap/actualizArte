@@ -3,6 +3,10 @@ import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-nat
 import { CategoriaDAO } from "../dao/CategoriaDAO";
 import { Categoria } from "../models/CategoriaModel";
 import { onSnapshot } from "firebase/firestore";
+import {
+    TouchableOpacity,
+  } from "react-native";
+  import estilos from "../style sheets/estilos";
 
 const CategoriaScreen = (props) => {
 
@@ -59,19 +63,54 @@ const CategoriaScreen = (props) => {
                     <Text>{categoria.getId} - {categoria.getNombre}</Text>
                     <TextInput placeholder="Editar Nombre"
                         onChangeText={(value) => setNombre({nombre: value})}/>
-                    <Button title="Editar" onPress={() => 
-                        handleUpdate(new Categoria(categoria.getId, nombre.nombre))} />
-                    <Button title="Eliminar" onPress={() => handleDelete(categoria)} /> 
+
+
+                    
+
+                    <TouchableOpacity
+                        style={estilos.botonHome}
+                        onPress={() => 
+                            handleUpdate(new Categoria(categoria.getId, nombre.nombre))}
+                        >
+                        <Text style={estilos.buttonText}>EDITAR</Text>
+                    </TouchableOpacity>
+
+
+                    
+                    <TouchableOpacity
+                        style={estilos.botonHome}
+                        onPress={() => handleDelete(categoria)}
+                        >
+                        <Text style={estilos.buttonText}>ELIMINAR</Text>
+                    </TouchableOpacity>
+
                 </View>            
             ))}
 
             <TextInput placeholder="Nombre" 
                 onChangeText={(value) => setNombre({nombre: value})} />
-            <Button title="Agregar" onPress={handleInsert} />
+
+
+             
+
+            <TouchableOpacity
+                        style={estilos.botonHome}
+                        onPress={handleInsert} 
+                        >
+                        <Text style={estilos.buttonText}>AGREGAR</Text>
+                    </TouchableOpacity>
 
             <TextInput placeholder="Buscar"
                 onChangeText={(value) => setIdentificador({identificador: value})} />
-            <Button title="Buscar" onPress={() => handleFindById(identificador.identificador)} />
+            
+
+            <TouchableOpacity
+                        style={estilos.botonHome}
+                        onPress={() => handleFindById(identificador.identificador)}
+                        >
+                        <Text style={estilos.buttonText}>BUSCAR</Text>
+                    </TouchableOpacity>
+
         </ScrollView>
         );
 }
@@ -79,7 +118,8 @@ const CategoriaScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 35
+        padding: 35,
+        backgroundColor:"#f2e1c6",
     },
 
     inputGroup: {
