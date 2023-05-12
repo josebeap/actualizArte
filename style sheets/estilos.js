@@ -3,6 +3,15 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 
 const estilos = StyleSheet.create({
+  
+  botonHome:{
+    color:"#eabf7b",
+    backgroundColor: "#eabf7b",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+ 
   container: {
     flex: 1,
     alignItems: 'center',
@@ -22,7 +31,6 @@ const estilos = StyleSheet.create({
     width: "100%",
     justifyContent: 'space-between',
   },
-
   containerAccionesEnListas:{
     justifyContent: 'center',
     alignItems: 'center',
@@ -35,7 +43,6 @@ const estilos = StyleSheet.create({
 
     
   },
-
   botonesEnListas:{
     flexDirection: "row",
     alignItems: "baseline",
@@ -43,7 +50,6 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 5,
     marginBottom: 5,
   },
-
   title: {
     fontSize: windowWidth / 15,
     fontWeight: "bold",
@@ -76,15 +82,16 @@ const estilos = StyleSheet.create({
     padding: 2,
   },
   button: {
-    backgroundColor: "blue",
+    color:"gray",
     padding: 10,
     borderRadius: 5,
     width: "40%",
     maxWidth: 400,
   },
   buttonText: {
-    color: "red",
+    color: "BLACK",
     fontWeight: "bold",
+    textAlign: 'center',
   },
   totalText: {
     fontSize: 20,
@@ -96,7 +103,7 @@ const estilos = StyleSheet.create({
     maxWidth: 400,
     alignItems: "center",
     justifyContent: "center",
-  },
+  }
 });
 
 export default estilos;
