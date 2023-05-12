@@ -5,50 +5,49 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,Button  } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { onSnapshot } from "firebase/firestore";
+import { BarChart } from 'react-native-chart-kit';
+
 
 const FinanzasScreen = () => {
-  //almacenamiento de las ganancias del mes
-  const [gananciasMensuales, setGananciasMensuales] = useState(0);
-  const [ventasMensuales, setventasMensuales] = useState(0);
-  const [totalVendido, settotalVendido] = useState(0);
+  const prueba = VentaDAO.ventasXFecha(new Date().toLocaleDateString());
+  console.log(prueba)
+  const [data, setData] = React.useState({
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+    datasets: [
+      {
+        data: [20, 45, 28, 80]
+      }
+    ]
+  });
 
-  useEffect(() => {
-    const fetchVenta = async () => {
-      const mesPedido = new Date().getMonth() + 1;
-      const querySnapshot = await getDocs(collection(FIRESTORE_DB, "Venta"));
-      let acumulado = 0;
-      querySnapshot.forEach((doc) => {
-        const venta = doc.data();
-        const fechaVenta = venta.fecha;
-        const fechaParts = fechaVenta.split("/");
-        const mesVenta = parseInt(fechaParts[1], 10);
-        if (mesVenta === mesPedido) {
-          acumulado += parseInt(venta.precioTotal);
-          console.log("Estamos en el if");
-          console.log(venta.precioTotal);
-          console.log("El acumulado es");
-        }
-      });
+  const handleIncomes = () => {
+    // Aquí puedes actualizar los datos del gráfico para mostrar los ingresos
+  };
 
-      settotalVendido(acumulado);
-    };
-    fetchVenta();
-  }, []);
-
-  //efecto para actualizar el valor de totalvendido
-  useEffect(() => {}, [totalVendido]);
+  const handleExpenses = () => {
+    // Aquí puedes actualizar los datos del gráfico para mostrar los gastos
+  };
 
   return (
-    <>
-      <Text>Finanzas</Text>
-      <Text>{new Date().toLocaleString("default", { month: "long" })}</Text>
-      <Text>Ganancias: {totalVendido}</Text>
-    </>
+    <View>
+      <Button title="Ingresos" onPress={handleIncomes} />
+      <Button title="Gastos" onPress={handleExpenses} />
+      <BarChart
+        data={data}
+        width={300}
+        height={220}
+        chartConfig={{
+          backgroundColor: '#ffffff',
+          backgroundGradientFrom: '#ffffff',
+          backgroundGradientTo: '#ffffff',
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        }}
+      />
+      {/* Aquí puedes agregar un selector para el mes y año */}
+    </View>
   );
-
-  const styles = StyleSheet.create({});
 };
 export { FinanzasScreen };
