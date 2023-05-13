@@ -3,14 +3,40 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 
 const estilos = StyleSheet.create({
+  
+  botonHome:{
+    color:"#eabf7b",
+    backgroundColor: "#eabf7b",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+ 
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'grey',
+    backgroundColor: "#f2e1c6",
     padding:10,
     width: '100%',
     
 
+  },
+  containerCheck: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: "#f2e1c6",
+    padding:10,
+    width: '100%',
+  },
+  check:{
+    alignItems: 'center',
+    padding:10
+  },
+  picker:{
+    flex: 1,
+    backgroundColor: "#f2e1c6",
+    padding:10,
+    marginBottom:10
   },
   containerOptions: {
     flexDirection: 'row',
@@ -22,7 +48,6 @@ const estilos = StyleSheet.create({
     width: "100%",
     justifyContent: 'space-between',
   },
-
   containerAccionesEnListas:{
     justifyContent: 'center',
     alignItems: 'center',
@@ -35,7 +60,6 @@ const estilos = StyleSheet.create({
 
     
   },
-
   botonesEnListas:{
     flexDirection: "row",
     alignItems: "baseline",
@@ -43,7 +67,6 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 5,
     marginBottom: 5,
   },
-
   title: {
     fontSize: windowWidth / 15,
     fontWeight: "bold",
@@ -61,8 +84,13 @@ const estilos = StyleSheet.create({
     height: 40,
     borderColor: "black",
     borderWidth: 1,
+    textAlign: 'center',
     marginBottom: 20,
+    
+      
+  
   },
+  
   botonesAgregarQuitar:{
 
   },
@@ -76,15 +104,16 @@ const estilos = StyleSheet.create({
     padding: 2,
   },
   button: {
-    backgroundColor: "blue",
+    color:"gray",
     padding: 10,
     borderRadius: 5,
     width: "40%",
     maxWidth: 400,
   },
   buttonText: {
-    color: "red",
+    color: "BLACK",
     fontWeight: "bold",
+    textAlign: 'center',
   },
   totalText: {
     fontSize: 20,

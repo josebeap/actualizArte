@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 35,
+    backgroundColor:"#f2e1c6",
   },
 
   inputGroup: {
@@ -220,6 +221,7 @@ const styles = StyleSheet.create({
   },
 
   view: {
+    backgroundColor:"#f4c67f",
     flex: 1,
     paddingBottom: 20,
     paddingLeft: 15,
