@@ -35,7 +35,10 @@ class Producto extends Recurso {
       return this._vendidoUltimoTrimestre;
     }
 
-    //Falta un metodo para devolver la lista de materiales 
+    get getMateriaPrimaList() {
+      const lista = this._materiaPrimaList;
+      return lista;
+    } 
   
     // Métodos set
     set setDescripcion(value) {

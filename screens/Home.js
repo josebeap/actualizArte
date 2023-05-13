@@ -1,13 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import estilos from "../style sheets/estilos";
 
 const Home = (props) => {
@@ -34,9 +25,9 @@ const Home = (props) => {
    
       <TouchableOpacity
       style={estilos.botonHome}
-      onPress={() => handleProps("Producto")}
+      onPress={() => handleProps("AgregarManualidad")}
       >
-        <Text style={estilos.buttonText}>PRODUCTO</Text>
+        <Text style={estilos.buttonText}>AGREGAR MANUALIDAD</Text>
       </TouchableOpacity>
   
       <TouchableOpacity
