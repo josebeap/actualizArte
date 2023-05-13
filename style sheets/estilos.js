@@ -125,7 +125,15 @@ const estilos = StyleSheet.create({
     maxWidth: 400,
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
+  item: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  textItems: {
+    fontSize: 22,
+  },
 });
 
 export default estilos;
