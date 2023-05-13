@@ -9,6 +9,7 @@ import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
+import estilos from "../style sheets/estilos";
 
 const AgregarManualidadScreen = () => {
 
@@ -121,56 +122,63 @@ const AgregarManualidadScreen = () => {
             <View style={styles.container}>
             
                 <TextInput placeholder="Nombre" inputMode="text"
-                    onChangeText={(value) => handleChangeText("nombre", value)} />
+                    onChangeText={(value) => handleChangeText("nombre", value)} 
+                    style={estilos.input} />
 
                 <TextInput placeholder="Descripción" inputMode="text"
-                    onChangeText={(value) => handleChangeText("descripcion", value)} />
+                    onChangeText={(value) => handleChangeText("descripcion", value)} 
+                    style={estilos.input} />
 
                 <TextInput placeholder="Precio" inputMode="decimal"
-                    onChangeText={(value) => handleChangeText("precio", value)} />
+                    onChangeText={(value) => handleChangeText("precio", value)} 
+                    style={estilos.input} />
 
                 <TextInput placeholder="Cantidad" inputMode="numeric"
-                    onChangeText={(value) => handleChangeText("cantidadStock", value)} />
+                    onChangeText={(value) => handleChangeText("cantidadStock", value)} 
+                    style={estilos.input} />
 
-                <Picker  
-                    onValueChange={(value) => {handleChangeText("categoria", value)}}>
+                <Picker onValueChange={(value) => {handleChangeText("categoria", value)}}
+                    style={estilos.picker}>
                     <Picker.Item label={"Categoría"} />
                     {categorias.map((categoria) => (
-                        <Picker.Item key={categoria.getId} label={categoria.getNombre} value={categoria.getId} />
+                        <Picker.Item key={categoria.getId} label={categoria.getNombre} 
+                            value={categoria.getId} />
                     ))}
                 </Picker>
 
-                <TouchableOpacity style={styles.selectButton} onPress={handlePickImage}>
-                    <Text style={styles.buttonText}>
-                        Seleccionar Imagen
-                    </Text>
+                <TouchableOpacity style={estilos.botonHome} onPress={handlePickImage}>
+                    <Text style={estilos.buttonText}>Seleccionar Imagen</Text>
                 </TouchableOpacity>
-
+                
                 <View style={styles.imageContainer}>
-                    {image && <Image source={{uri: image.uri}} style={{ width: 150, height: 150}}/>}
+                    {image && <Image source={{uri: image.uri}} style={{width: 150, height: 150, alignSelf:"center", marginBottom:10}}/>}
                 </View>
         
-                <Button title="Abrir modal" onPress={() => setModalVisible(true)} />
+                <TouchableOpacity style={estilos.botonHome} onPress={() => setModalVisible(true)}>
+                    <Text style={estilos.buttonText}>Seleccionar Materias Primas</Text>
+                </TouchableOpacity>
 
-                <Modal animationType="slide" transparent={false} visible={modalVisible} 
+                <Modal animationType="slide" transparent={false}
+                    visible={modalVisible} 
                     onRequestClose={() => setModalVisible(false)} >
                     
                     {materiasPrimas.map((matPrima) => (
-                        <View key={"v" + matPrima.obj.getId}>
+                        <View style={estilos.containerCheck} key={"v" + matPrima.obj.getId}>
                             <CheckBox key={"c" + matPrima.obj.getId} value={matPrima.seleccionado}
-                            onValueChange={() => handleSelection(matPrima.obj.getId)} />
-                            <Text key={"t" + matPrima.obj.getId}>{matPrima.obj.getNombre}</Text>
+                                onValueChange={() => handleSelection(matPrima.obj.getId)} />
+                            <Text style={estilos.buttonText} key={"t" + matPrima.obj.getId}>{matPrima.obj.getNombre}</Text>
                         </View>
                         
                     ))}
-                    <Button title="Cerrar modal" 
-                        onPress={() => setModalVisible(false)}
-                    />
-                
+                    <TouchableOpacity style={estilos.botonHome}
+                        onPress={() => setModalVisible(false)}>
+                        <Text style={estilos.buttonText}>Cerrar</Text>
+                    </TouchableOpacity>
                 </Modal>
 
-                <Button title="Agregar" onPress={handleInsert} />
-
+                <TouchableOpacity style={estilos.botonHome} onPress={handleInsert}>
+                    <Text style={estilos.buttonText}>Agregar</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     )
@@ -180,33 +188,8 @@ export { AgregarManualidadScreen };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        backgroundColor: '#FFF'
-    },
-    selectButton:{
-        borderRadius: 5,
-        width: 150,
-        height: 50,
-        backgroundColor: 'blue',
-        alignItems:'center',
-        justifyContent: 'center'
-    },
-    uploadButton:{
-        borderRadius: 5,
-        width: 150,
-        height: 50,
-        backgroundColor: 'green',
-        alignItems:'center',
-        justifyContent: 'center'
-    },
-    buttonText:{
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    imageContainer:{
-        marginTop: 30,
-        marginBottom: 50,
-        alignItems: 'center'
+      flex: 1,
+      padding: 10,
+      backgroundColor:"#f2e1c6",
     }
 });
