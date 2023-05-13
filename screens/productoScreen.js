@@ -80,7 +80,8 @@ const ProductoScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 35
+        padding: 35,
+        backgroundColor:"#f2e1c6",
     },
 
     inputGroup: {

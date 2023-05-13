@@ -18,6 +18,8 @@ Notifications.scheduleNotificationAsync({
   trigger: { seconds: 5 },
 });
 
+
+
 export default function notificacionScreen() {
   const showAlert = () => {
     Alert.alert(

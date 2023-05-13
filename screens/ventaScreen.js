@@ -13,7 +13,7 @@ import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
 import { useNavigation } from '@react-navigation/native';
-
+import { Timestamp } from 'firebase/firestore';
 // Creacion de la venta
 const VentaScreen = () => {
   const [venta, setVenta] = useState([]);
@@ -55,7 +55,12 @@ const VentaScreen = () => {
     const options = await getOption();
     console.log(options)
     if (options.productosList){
-      const nuevaventa = new Venta(options);
+      const fechaTimestamp = Timestamp.fromDate(new Date(options.fecha));
+      const nuevaventa = new Venta({
+        ...options,
+        fecha: fechaTimestamp,
+      });
+
       await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
       
       navigation.goBack();
@@ -182,9 +187,10 @@ const VentaScreen = () => {
         </View>
 
         <View>
-          <TextInput
+          <TextInput 
             style={estilos.input}
-            placeholder="Buscar productos por nombre"
+            placeholder="Buscar productos por nombre" 
+            
             value={busqueda}
             onChangeText={(texto) => {
               // Filtrar solo letras
