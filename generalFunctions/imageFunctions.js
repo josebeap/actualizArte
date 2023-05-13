@@ -12,12 +12,11 @@ class imageFunctions {
             aspect: [4, 3],
             quality: 1
         });
-
         const source = {uri: result.assets[0].uri};
         return source;
     }
 
-    static uploadImage = async (image) => {
+    static uploadImage = async (image, filename) => {
         if (image == null) {
             console.log('No se ha seleccionado ninguna imagen');
             return Alert.alert('No se ha seleccionado ninguna imagen')
@@ -25,7 +24,6 @@ class imageFunctions {
 
         const response = await fetch(image.uri);
         const blob = await response.blob();
-        const filename = image.uri.substring(image.uri.lastIndexOf('/')+1);
         var storageRef = ref(STORAGE, filename);
         uploadBytes(storageRef, blob).then((snapshot) => {
             console.log('Imagen Subida!');

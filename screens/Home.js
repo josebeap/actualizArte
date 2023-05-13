@@ -1,12 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { Button, ScrollView, StyleSheet } from "react-native";
 
 const Home = (props) => {
   const handleProps = (nombre) => {
