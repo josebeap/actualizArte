@@ -9,7 +9,7 @@ const Home = (props) => {
     <ScrollView style={styles.container}>
       <Button title='Categoria'    onPress={() => handleProps("Categoria")} />
       <Button title='Venta'        onPress={() => handleProps("Venta")} />
-      <Button title='Producto'     onPress={() => handleProps("Producto")} />
+      <Button title='Agregar Manualidad'     onPress={() => handleProps("AgregarManualidad")} />
       <Button title='Recurso'      onPress={() => handleProps("Recurso")} />
       <Button title='Notificacion' onPress={() => handleProps("Notificacion")} />
       <Button title='Finanzas'     onPress={() => handleProps("Finanzas")} />
