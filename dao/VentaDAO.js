@@ -8,7 +8,7 @@ import {
   updateDoc,
   query,
   where,
-  orderBy
+  orderBy,
 } from "firebase/firestore";
 import { Venta } from "../models/VentaModel";
 import "firebase/firestore";
@@ -64,35 +64,47 @@ class VentaDAO {
     await deleteDoc(ref);
   }
 
-  // Método para obtener todas las ventas apartir de una fecha
-  static async ventasXFecha(fecha) {
-    console.log(fecha);
-    let partesFecha = fecha.split('/');
-    let mes = parseInt(partesFecha[1]) ;
-
-    console.log(partesFecha);
-    console.log(mes);
-    const fechaInicio = new Date(`${partesFecha[0]}-${(mes - 1).toString()}-${partesFecha[2]}`);
-    const fechaFin = new Date(`${partesFecha[0]}-${ (mes + 1).toString()}-${partesFecha[2]}`);
-
-    console.log(fechaInicio + 'inicio fecha');
-    console.log(fechaFin + 'fin fecha');
-    const db = collection(FIRESTORE_DB, "Venta");
-    const consulta = query(db,
-        where('fecha', '>', fechaInicio),
-        where('fecha', '<', fechaFin),
-        orderBy('fecha'));
-
-        console.log(consulta);
-    
-    const querySnapshot = await getDocs(consulta);
-    console.log(querySnapshot);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.precioTotal, " => ", doc.data());
+  static async formatoFecha(fecha) {
+    const nuevoFormato = fecha.toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
+    return nuevoFormato;
   }
 
+  // Método para obtener todas las ventas apartir de una fecha
+  static async ventasXFecha(fecha) {
+    let mes = fecha.getMonth();
+    let year = fecha.getFullYear();
 
+    console.log(year);
+    console.log(mes);
+
+    const fechaInicio = new Date(year, mes, 1);
+    const fechaFin = new Date(year, mes + 1, 1);
+
+    console.log(fechaInicio + "inicio fecha");
+    console.log(fechaFin + "fin fecha");
+
+    const db = collection(FIRESTORE_DB, "Venta");
+    const consulta = query(
+      db,
+      where("fecha", ">=", fechaInicio),
+      where("fecha", "<", fechaFin),
+      orderBy("fecha")
+    );
+
+    const querySnapshot = await getDocs(consulta);
+    const ventas = [];
+
+    querySnapshot.forEach((doc) => {
+      const data = new Venta(doc.data());
+      ventas.push(data);
+    });
+    console.log(ventas);
+    return ventas;
+  }
 }
 
 export { VentaDAO };

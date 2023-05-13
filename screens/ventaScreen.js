@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  
   } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
@@ -30,6 +31,7 @@ const VentaScreen = () => {
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [productosAVender, setproductosAVender] = useState({ "": 0 });
+
   const terminarVenta = () => {
     calcularPrecioVenta();
     setBusqueda("");
@@ -43,7 +45,7 @@ const VentaScreen = () => {
     const options = {
       cliente: nombreCliente,
       codigo: codigo,
-      fecha: fecha,
+      fecha: new Date(),
       precioTotal: precioVenta,
       productosList: productosVendidos
     };
@@ -55,17 +57,28 @@ const VentaScreen = () => {
     const options = await getOption();
     console.log(options)
     if (options.productosList){
-      const fechaTimestamp = Timestamp.fromDate(new Date(options.fecha));
-      const nuevaventa = new Venta({
-        ...options,
-        fecha: fechaTimestamp,
-      });
-
-      await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
-      
-      navigation.goBack();
+      try {
+        const fechaActual = new Date();
+        const timestampActual = Timestamp.fromDate(fechaActual);
+        const nuevaventa = new Venta({
+          ...options,
+          fecha: timestampActual,
+        });
+  
+        console.log(nuevaventa + "venta nueva");
+        await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
+  
+        navigation.goBack();
+      } catch (error) {
+        // manejar el error
+        console.error(error);
+      }
     }
   };
+
+  const fechaValida = async(options) => {
+    
+  }
 
 
   //obtenemos los productos desde la base
