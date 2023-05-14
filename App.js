@@ -11,7 +11,7 @@ import { Home } from "./screens/Home";
 import { ActualizarInventarioScreen } from "./screens/ActualizarInventarioScreen";
 // import { AgregarManualidadScreen } from "./screens/AgregarManualidadScreen";
 // import NotificacionScreen from "./screens/notificacionScreen";
-// import { ElementosInvenDisponible } from "./screens/elementosInventarioDispScreen";
+import { ElementosInvenDisponible } from "./screens/elementosInventarioDispScreen";
 
 const Stack = createNativeStackNavigator();
 
