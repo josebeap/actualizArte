@@ -23,33 +23,34 @@ const Home = (props) => {
         <Text style={estilos.buttonText}>VENTA</Text>
       </TouchableOpacity>
    
-      <TouchableOpacity
+      {/* <TouchableOpacity
       style={estilos.botonHome}
       onPress={() => handleProps("AgregarManualidad")}
       >
         <Text style={estilos.buttonText}>AGREGAR MANUALIDAD</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
   
-      <TouchableOpacity
+      {/* <TouchableOpacity
       style={estilos.botonHome}
       onPress={() => handleProps("Recurso")}
       >
         <Text style={estilos.buttonText}>RECURSO</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
  
-      <TouchableOpacity
+      {/* <TouchableOpacity
       style={estilos.botonHome}
       onPress={() => handleProps("Notificacion")} 
       >
         <Text style={estilos.buttonText}>NOTIFICACIÓN</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
    
-      <TouchableOpacity
+      {/* <TouchableOpacity
+      
       style={estilos.botonHome}
       onPress={() => handleProps("Finanzas")}
       >
         <Text style={estilos.buttonText}>FINANZAS</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
    
       <TouchableOpacity
       style={estilos.botonHome}

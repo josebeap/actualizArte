@@ -23,7 +23,8 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-picker-select": "^8.0.4",
     "react-native-web": "~0.18.11",
-    "tailwindcss-react-native": "^1.7.10"
+    "tailwindcss-react-native": "^1.7.10",
+    "expo-dev-client": "~2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
