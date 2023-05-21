@@ -1,5 +1,5 @@
 import  React, { useState, useEffect} from "react";
-import { View, Text, TouchableOpacity, TextInput,  ScrollView, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, TextInput,  ScrollView,} from "react-native";
 import { CategoriaDAO } from "../dao/CategoriaDAO";
 import { Categoria } from "../models/CategoriaModel";
 import { onSnapshot } from "firebase/firestore";
@@ -51,7 +51,7 @@ const CategoriaScreen = (props) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={estilos.containerScrollView}>
             <Text>Lista de Categorias:</Text>
             {categorias.map(categoria => ( 
                 <View key={categoria.getId}>
@@ -109,21 +109,5 @@ const CategoriaScreen = (props) => {
         </ScrollView>
         );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 35,
-        backgroundColor:"#f2e1c6",
-    },
-
-    inputGroup: {
-        flex: 1,
-        padding: 0,
-        marginBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
-    }
-})
 
 export { CategoriaScreen }

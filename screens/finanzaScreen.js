@@ -1,12 +1,6 @@
 import React, { useState} from "react";
 import estilos from "../style sheets/estilos";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import {View,Text,Button,FlatList,TouchableOpacity,} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { BarChart } from "react-native-chart-kit";
 

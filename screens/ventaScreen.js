@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {View,Text,TextInput,StyleSheet,FlatList,TouchableOpacity,} from "react-native";
+import {View,Text,TextInput,FlatList,TouchableOpacity,} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
@@ -225,59 +225,5 @@ const VentaScreen = () => {
     
   );
 };
-
-const styles = StyleSheet.create({
-  containerList: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "grey",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 16,
-    marginBottom: 16,
-  },
-  form: {
-    marginBottom: 16,
-  },
-  label: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
-    marginRight: 16,
-  },
-  input: {
-    height: 40,
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    padding: 8,
-    marginRight: 16,
-  },
-  button: {
-    backgroundColor: "blue",
-    padding: 12,
-    borderRadius: 4,
-    width: "100%",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  totalText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 16,
-  },
-});
 
 export { VentaScreen };

@@ -1,8 +1,9 @@
 import  React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity} from "react-native";
+import { View, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
 import {  collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import estilos from "../style sheets/estilos";
 
 const ProductoScreen = () => {
     const [recursos, setRecursos] = useState([])
@@ -63,7 +64,7 @@ const ProductoScreen = () => {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={estilos.containerScrollView}>
             <View> 
                 <FlatList data={recursos} renderItem={renderRecurso} keyExtractor={recurso.id}/>
             </View>
@@ -71,20 +72,5 @@ const ProductoScreen = () => {
         );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 35,
-        backgroundColor:"#f2e1c6",
-    },
-
-    inputGroup: {
-        flex: 1,
-        padding: 0,
-        marginBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
-    }
-})
 
 export {ProductoScreen}
