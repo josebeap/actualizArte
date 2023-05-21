@@ -1,8 +1,7 @@
 import  React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity} from "react-native";
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { QuerySnapshot, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { async } from "@firebase/util";
+import {  collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ProductoScreen = () => {

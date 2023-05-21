@@ -11,14 +11,14 @@ import {
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,Timestamp } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
 import { useNavigation } from '@react-navigation/native';
-import { Timestamp } from 'firebase/firestore';
-// Creacion de la venta
+
+
 const VentaScreen = () => {
   const [venta, setVenta] = useState([]);
-  //definimos los atributos de la venta
+  //atributos de la venta
   const [fecha, setFecha] = useState(new Date().toLocaleDateString()); // obtener la fecha actual y darle formato
   const [nombreCliente, setNombreCliente] = useState(
     "Ingresa el nombre del cliente"
@@ -76,12 +76,7 @@ const VentaScreen = () => {
     }
   };
 
-  const fechaValida = async(options) => {
-    
-  }
-
-
-  //obtenemos los productos desde la base
+  //porque debemos obtenemos los productos desde la base
   useEffect(() => {
     const fetchProductos = async () => {
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "Producto"));

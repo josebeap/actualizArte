@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  collection,
-  connectFirestoreEmulator,
-  getDocs,
-} from "firebase/firestore";
-import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
+import React, { useState} from "react";
 import estilos from "../style sheets/estilos";
 import {
   View,
@@ -12,13 +6,9 @@ import {
   Button,
   FlatList,
   TouchableOpacity,
-  StyleSheet,
 } from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
-import { onSnapshot } from "firebase/firestore";
-import DatePicker from "react-native-datepicker";
 import { BarChart } from "react-native-chart-kit";
-import { Venta } from "../models/VentaModel";
 
 const FinanzasScreen = () => {
   const [ventasObtenidas, setVentasObtenidas] = useState([]);

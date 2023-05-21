@@ -1,11 +1,8 @@
 import  React, { useState, useEffect} from "react";
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, TextInput,  ScrollView, StyleSheet } from "react-native";
 import { CategoriaDAO } from "../dao/CategoriaDAO";
 import { Categoria } from "../models/CategoriaModel";
 import { onSnapshot } from "firebase/firestore";
-import {
-    TouchableOpacity,
-  } from "react-native";
   import estilos from "../style sheets/estilos";
 
 const CategoriaScreen = (props) => {
@@ -33,26 +30,24 @@ const CategoriaScreen = (props) => {
         const nuevocategoria = await CategoriaDAO.insert(categoria);
         setcategorias([...categorias, nuevocategoria]);
         setNombre('');
-        //props.navigation.navigate('Categoria');
     };
 
     const handleUpdate = async categoria => {
         await CategoriaDAO.update(categoria);
         const index = categorias.findIndex(cat => cat.id === categoria.id);
         setcategorias([...categorias.slice(0, index), categoria, ...categorias.slice(index + 1)]);
-        //props.navigation.navigate('Categoria');
+        
     };
 
     const handleDelete = async categoria => {
         await CategoriaDAO.delete(categoria);
         setcategorias(categorias.filter(cat => cat.id !== categoria.id));
-        //props.navigation.navigate('Categoria');
+        
     };
 
     const handleFindById = async id => {
         console.log(await CategoriaDAO.findById(id));
         setIdentificador('');
-        //props.navigation.navigate('Categoria');
     };
 
     return (

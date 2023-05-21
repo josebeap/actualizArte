@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   ScrollView,
   StyleSheet,
 } from "react-native";
@@ -31,7 +30,7 @@ const ActualizarInventarioScreen = () => {
             doc.data().precio,
             doc.data().cantidadStock
           );
-          (materiaPrim) =>
+           (materiaPrim) =>
             materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
           (materiaPrim) =>
             materiaPrim.setUsadaUltimoTrimestre(

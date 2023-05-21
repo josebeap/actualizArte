@@ -1,12 +1,9 @@
 import  React, { useState } from "react";
-import { View, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import { View, TextInput, ScrollView, StyleSheet,Text, TouchableOpacity,} from "react-native";
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
 import { addDoc, collection } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
-import {
-    Text,
-    TouchableOpacity,
-  } from "react-native";
+
 
 const RecursoScreen = (props) => {
 

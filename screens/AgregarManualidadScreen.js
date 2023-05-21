@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Modal, TextInput,
+import { View, Text, StyleSheet, Modal, TextInput,
      Picker, TouchableOpacity, Image, ScrollView, CheckBox, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { imageFunctions } from "../generalFunctions/imageFunctions";
