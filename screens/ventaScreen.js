@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  
-  } from "react-native";
+import {View,Text,TextInput,StyleSheet,FlatList,TouchableOpacity,} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
@@ -18,7 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const VentaScreen = () => {
   const [venta, setVenta] = useState([]);
-  //atributos de la venta
   const [fecha, setFecha] = useState(new Date().toLocaleDateString()); // obtener la fecha actual y darle formato
   const [nombreCliente, setNombreCliente] = useState(
     "Ingresa el nombre del cliente"
@@ -52,7 +43,7 @@ const VentaScreen = () => {
     return options;
   };
 
-  //guardado de la venta nueva en la base
+  //guardado venta nueva en la base
   const GuardarVenta = async () => {
     const options = await getOption();
     console.log(options)
@@ -70,7 +61,6 @@ const VentaScreen = () => {
   
         navigation.goBack();
       } catch (error) {
-        // manejar el error
         console.error(error);
       }
     }
@@ -117,7 +107,6 @@ const VentaScreen = () => {
     return cleanedDict;
   }
 
-  //Calculo del precio de la venta
   const calcularPrecioVenta = () => {
     let total = 0;
     for (let i in productosAVender) {
@@ -134,7 +123,6 @@ const VentaScreen = () => {
     limpiarDiccionario(productosAVender);
   };
 
-  //renderizacion del diccionario con los productos filtrados
   const renderProductosSeleccionados = ({ item }) => {
     console.log(productosAVender);
     return (
@@ -147,7 +135,7 @@ const VentaScreen = () => {
             keyboardType="numeric"
             value={productosAVender[item.nombre][0] || ""}
             onChangeText={(text) => {
-              // Verificar si el texto ingresado es un número
+              
               if (/^\d+$/.test(text) || text === "") {
                 setproductosAVender((prevState) => ({
                   ...prevState,
@@ -186,7 +174,7 @@ const VentaScreen = () => {
             value={documentoCliente}
             onFocus={() => setDocumentoCliente("")}
             onChangeText={(text) => {
-              // Verificar si el texto ingresado es un número
+              
               if (/^\d+$/.test(text) || text === "") {
                 setDocumentoCliente(text);
               }
@@ -201,9 +189,9 @@ const VentaScreen = () => {
             
             value={busqueda}
             onChangeText={(texto) => {
-              // Filtrar solo letras
+              
               let textoFiltrado = texto.replace(/[^a-zA-Z]/g, "");
-              // Actualizar el estado de busqueda
+              
               setBusqueda(textoFiltrado.toString());
             }}
             keyboardType="default"

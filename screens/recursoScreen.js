@@ -13,11 +13,9 @@ const RecursoScreen = (props) => {
         cantidadStock: ''
     });
 
-    /* agregar un Recurso */
     const addRecurso = async () => {
         const doc = await addDoc(collection(FIRESTORE_DB, 'Recurso'), 
             {nombre: state.nombre, precio: state.precio, cantidadStock: state.cantidadStock});
-        /* cambiar de screen */
         props.navigation.navigate('Producto');
     }
 

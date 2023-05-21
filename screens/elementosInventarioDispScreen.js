@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import {View,Text,TextInput,ScrollView,StyleSheet,} from "react-native";
 import { onSnapshot } from "firebase/firestore";
 import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { Producto } from "../models/ProductoModel";

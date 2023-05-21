@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import {View,Text,TextInput,ScrollView,StyleSheet,} from "react-native";
 import { onSnapshot } from "firebase/firestore";
 import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { Producto } from "../models/ProductoModel";
@@ -28,19 +22,13 @@ const ActualizarInventarioScreen = () => {
             doc.id,
             doc.data().nombre,
             doc.data().precio,
-            doc.data().cantidadStock
-          );
-           (materiaPrim) =>
+            doc.data().cantidadStock);
+            (materiaPrim) =>
             materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
-          (materiaPrim) =>
-            materiaPrim.setUsadaUltimoTrimestre(
-              doc.data().usadaUltimoTrimestre
-            );
-          materiasP.push(materiaPrim);
-        });
-        setMateriasP(materiasP);
-      },
-    });
+            (materiaPrim) =>materiaPrim.setUsadaUltimoTrimestre(
+              doc.data().usadaUltimoTrimestre);
+          materiasP.push(materiaPrim);});
+        setMateriasP(materiasP);}});
 
     const productoRef = ProductoDAO.getCollection();
     const subsProducto = onSnapshot(productoRef, {

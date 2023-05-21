@@ -5,7 +5,6 @@ import {  collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/fir
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const ProductoScreen = () => {
-// definicion los estados  a los componentes de la vista
     const [recursos, setRecursos] = useState([])
     const [recurso, setRecurso] = useState({
         nombre: '',
@@ -13,7 +12,6 @@ const ProductoScreen = () => {
         cantidadStock: ''
     });
 
-    /* Obtener informacion de firebase*/
     useEffect(() => {
         const recursoRef = collection(FIRESTORE_DB, 'Recurso');
 
@@ -34,23 +32,20 @@ const ProductoScreen = () => {
         return () => subscriber()
     }, [])
  
-    /* funcion para mandarle la informacion a la FlatList */
+    /*para mandarle la informacion a la FlatList */
     const renderRecurso = ({item}) => {
 
         const ref = doc(FIRESTORE_DB, `Recurso/${item.id}`);
 
-        /* suma 10000 al precio al apretar en el icono */
+        /* se debe sumar 10000 al precio al apretar en el icono */
         const toggleDone = async() => {
             let precio = {precio: item.precio};
             precio = Number.parseFloat(precio.precio) + 10000;
             updateDoc(ref, {precio: precio});
         }
-
-        /* elimina el recurso */
         const deleteItem = async() => {
            deleteDoc(ref);
         }
-
         return (
             <View>
                 <TouchableOpacity onPress={toggleDone}>
