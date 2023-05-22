@@ -1,9 +1,13 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import estilos from "../style sheets/estilos";
-import {View,Text,Button,FlatList,TouchableOpacity,} from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
-import { BarChart } from "react-native-chart-kit";
-import { Venta } from "../models/VentaModel";
 
 const FinanzasScreen = () => {
   const [ventasObtenidas, setVentasObtenidas] = useState([]);
@@ -29,12 +33,10 @@ const FinanzasScreen = () => {
 
   if (primeraVista) {
     modificarMes();
-    
   }
 
   async function modificarMes(numeroMes) {
     const fechaActual = new Date();
-
     if (primeraVista) {
       setNombreMes(fechaActual.toLocaleString("es-ES", { month: "long" }));
       setPrimeraVista(false);
@@ -50,7 +52,6 @@ const FinanzasScreen = () => {
     if (JSON.stringify(ventasObtenidas) !== JSON.stringify(ventas)) {
       await setVentasObtenidas(ventas);
     }
-    console.log(ventas + "ventas encontradas ");
     return ventas;
   }
 
@@ -59,39 +60,20 @@ const FinanzasScreen = () => {
     let contadorventas =0;
     let precios = [];
     let numeroVenta = [];
-    console.log(ventas);
     ventas.forEach((venta) => {
       console.log(venta.getPrecioTotal);
       precios.push(venta.getPrecioTotal);
       numeroVenta.push(contadorventas);
       contadorventas= contadorventas +1;
     });
-    console.log(ventas + "ventas obtenidas ");
-    const total = ventas.reduce(
-      (sum, venta) => sum + venta.getPrecioTotal,0);
-    
-    setIngresosXMes(total);
+    setIngresosXMes(actualizarIngresosXMes(ventas));
   }
 
-  function actualizarDatosTabla(nuevosLabels, nuevoData){
-    setDatosTabla({
-      labels: nuevosLabels,
-      datasets: [
-        {
-          data: nuevoData,
-        },
-      ],
-    });
-    mostrarGrafica();
+  function actualizarIngresosXMes(ventas){
+    const total = ventas.reduce(
+      (sum, venta) => sum + venta.getPrecioTotal,0);
+    return total;
   }
-  const [datosTabla, setDatosTabla] = React.useState({
-    labels: ["Enero", "Febrero", "Marzo", "Abril"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80],
-      },
-    ],
-  });
 
   const handleIncomes = () => {
     ingresosXVentas();
@@ -99,9 +81,6 @@ const FinanzasScreen = () => {
     actualizarDatosTabla();
   };
 
-  const handleExpenses = () => {
-    // Aquí puedes actualizar los datos del gráfico para mostrar los gastos
-  };
   const elegirMes = ({ item }) => (
     <View>
       <TouchableOpacity
@@ -117,23 +96,7 @@ const FinanzasScreen = () => {
     </View>
   );
 
-  const mostrarGrafica  = ()=>{
-    return(
-      <View>
-        <BarChart
-        data={datosTabla}
-        width={300}
-        height={220}
-        chartConfig={{
-          backgroundColor: "#ffffff",
-          backgroundGradientFrom: "#ffffff",
-          backgroundGradientTo: "#ffffff",
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        }}
-      />
-      </View>
-    );
-  }
+ 
   return (
     <View>
       <View style={{ ...estilos.containerOptions }}>
@@ -155,10 +118,7 @@ const FinanzasScreen = () => {
         )}
       </View>
 
-
       <Button title="Ingresos" onPress={handleIncomes} />
-      <Button title="Gastos" onPress={handleExpenses} />
-      
       <Text style={{...estilos.totalText}}>Total: ${ingresosXMes}</Text>
     </View>
   );

@@ -28,7 +28,7 @@ const VentaScreen = () => {
     setBusqueda("");
   };
 
-  //obtension de las opciones seleccionadas en la venta
+  //por que obtenemos las opciones seleccionadas en la venta
   const getOption = async () => {
     const codigo = await VentaDAO.getNumeroVentas()+1;
     const productosVendidos = await limpiarDiccionario(productosAVender)
@@ -43,22 +43,13 @@ const VentaScreen = () => {
     return options;
   };
 
-  //guardado venta nueva en la base
+  //guardado de la venta nueva en la base
   const GuardarVenta = async () => {
     const options = await getOption();
-    console.log(options)
     if (options.productosList){
       try {
-        const fechaActual = new Date();
-        const timestampActual = Timestamp.fromDate(fechaActual);
-        const nuevaventa = new Venta({
-          ...options,
-          fecha: timestampActual,
-        });
-  
-        console.log(nuevaventa + "venta nueva");
-        await VentaDAO.insertarNuevaVenta(nuevaventa.toObject());
-  
+        const nuevaVenta = generacionNuevaVenta(options);
+        await VentaDAO.insertarNuevaVenta(nuevaVenta.toObject());
         navigation.goBack();
       } catch (error) {
         console.error(error);
@@ -66,8 +57,18 @@ const VentaScreen = () => {
     }
   };
 
+  function generacionNuevaVenta(options){
+    const fechaActual = new Date();
+    const timestampActual = Timestamp.fromDate(fechaActual);
+    const nuevaventa = new Venta({
+          ...options,
+          fecha: timestampActual,
+    });
+    return nuevaventa;
+  }
+
   //obtenemos los productos desde la base
-  //porque debemos obtenemos los productos desde la base
+  //porque debemos obtenemos los productos para seleccionar
   useEffect(() => {
     const fetchProductos = async () => {
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "Producto"));
@@ -91,6 +92,8 @@ const VentaScreen = () => {
     return producto.nombre.toLowerCase().includes(busqueda.toLowerCase());
   });
 
+  //se limpia el diccionario 
+  //para tener solo los productos seleccionados
   function limpiarDiccionario(dict) {
     const cleanedDict = {};
   for (const [key, value] of Object.entries(dict)) {
@@ -104,7 +107,6 @@ const VentaScreen = () => {
       cleanedDict[key] = value;
     }
   }
-  
     return cleanedDict;
   }
 
@@ -125,7 +127,6 @@ const VentaScreen = () => {
   };
 
   const renderProductosSeleccionados = ({ item }) => {
-    console.log(productosAVender);
     return (
       <View style={{ ...estilos.containerOptions }}>
         <Text>{item.nombre}</Text>

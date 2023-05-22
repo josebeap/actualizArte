@@ -11,7 +11,7 @@ class Venta {
     get getCodigo() {return this._codigo;}
     get getFecha() {return this._fecha;}
     get getCliente() {return this._cliente;}
-    get getPrecioTotal() {return this._direccion;}
+    get getPrecioTotal() {return this._precioTotal;}
     get getproductosList(){return this._productosList;}
 
     set setFecha(value) {this._fecha = value;}
