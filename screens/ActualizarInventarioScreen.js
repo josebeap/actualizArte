@@ -84,7 +84,7 @@ const ActualizarInventarioScreen = () => {
   };
 
   return (
-    <ScrollView style={estilos.container}>
+    <ScrollView style={estilos.containerScrollView}>
       <Text>Lista de Productos:</Text>
       {productos.map((producto) => (
         <View key={producto.getId} style={estilos.view}>
