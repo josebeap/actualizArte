@@ -77,8 +77,14 @@ class VentaDAO {
     let mes = fecha.getMonth();
     let year = fecha.getFullYear();
 
+    console.log(year);
+    console.log(mes);
+
     const fechaInicio = new Date(year, mes, 1);
     const fechaFin = new Date(year, mes + 1, 1);
+
+    console.log(fechaInicio + "inicio fecha");
+    console.log(fechaFin + "fin fecha");
 
     const db = collection(FIRESTORE_DB, "Venta");
     const consulta = query(
@@ -95,6 +101,7 @@ class VentaDAO {
       const data = new Venta(doc.data());
       ventas.push(data);
     });
+    console.log(ventas);
     return ventas;
   }
 }
