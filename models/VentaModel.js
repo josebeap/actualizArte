@@ -24,8 +24,8 @@ class Venta {
     }
 
     get getPrecioTotal() {
-        return this._direccion;
-    }
+      return this._precioTotal;
+  }
 
     get getproductosList(){
       return this._productosList;

@@ -76,11 +76,6 @@ const VentaScreen = () => {
     }
   };
 
-  const fechaValida = async(options) => {
-    
-  }
-
-
   //obtenemos los productos desde la base
   useEffect(() => {
     const fetchProductos = async () => {
