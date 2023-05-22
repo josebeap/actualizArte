@@ -11,7 +11,6 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { Venta } from "../models/VentaModel";
-import "firebase/firestore";
 
 class VentaDAO {
   // Método para obtener una referencia a la colección "venta" en Firebase

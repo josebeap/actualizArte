@@ -16,10 +16,8 @@ const estilos = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: "#f2e1c6",
-    padding:10,
+    padding:35,
     width: '100%',
-    
-
   },
   containerCheck: {
     flex: 1,
@@ -60,6 +58,11 @@ const estilos = StyleSheet.create({
 
     
   },
+  containerScrollView: {
+    flex: 1,
+    padding: 35,
+    backgroundColor:"#f2e1c6",
+},
   botonesEnListas:{
     flexDirection: "row",
     alignItems: "baseline",
@@ -133,6 +136,22 @@ const estilos = StyleSheet.create({
   },
   textItems: {
     fontSize: 22,
+  },
+  view: {
+    backgroundColor:"#f4c67f",
+    flex: 1,
+    paddingBottom: 20,
+    paddingLeft: 15,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  inputGroup: {
+    flex: 1,
+    padding: 0,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
   },
 });
 

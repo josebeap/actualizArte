@@ -1,26 +1,9 @@
-import React, { useState, useEffect } from "react";
-import {
-  collection,
-  connectFirestoreEmulator,
-  getDocs,
-} from "firebase/firestore";
-import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
+import React, { useState} from "react";
 import estilos from "../style sheets/estilos";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import {View,Text,Button,FlatList,TouchableOpacity,} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
-import { onSnapshot } from "firebase/firestore";
-
 import { BarChart } from "react-native-chart-kit";
 import { Venta } from "../models/VentaModel";
-import { async } from "@firebase/util";
-import { func } from "prop-types";
 
 const FinanzasScreen = () => {
   const [ventasObtenidas, setVentasObtenidas] = useState([]);
@@ -171,6 +154,7 @@ const FinanzasScreen = () => {
           </View>
         )}
       </View>
+
 
       <Button title="Ingresos" onPress={handleIncomes} />
       <Button title="Gastos" onPress={handleExpenses} />
