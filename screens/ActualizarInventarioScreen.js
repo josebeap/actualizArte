@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import {View,Text,TextInput,ScrollView,} from "react-native";
 import { onSnapshot } from "firebase/firestore";
 import { MateriaPrimaDAO } from "../dao/MateriaPrimaDAO";
 import { Producto } from "../models/ProductoModel";
 import { ProductoDAO } from "../dao/ProductoDAO";
 import { MateriaPrima } from "../models/MateriaPrimaModel";
 import { AntDesign } from "@expo/vector-icons";
+import estilos from "../style sheets/estilos";
 
 const ActualizarInventarioScreen = () => {
   const [materiasP, setMateriasP] = useState([]);
@@ -29,19 +23,13 @@ const ActualizarInventarioScreen = () => {
             doc.id,
             doc.data().nombre,
             doc.data().precio,
-            doc.data().cantidadStock
-          );
-          (materiaPrim) =>
+            doc.data().cantidadStock);
+            (materiaPrim) =>
             materiaPrim.setCantidadUsadaTotal(doc.data().cantidadUsadaTotal);
-          (materiaPrim) =>
-            materiaPrim.setUsadaUltimoTrimestre(
-              doc.data().usadaUltimoTrimestre
-            );
-          materiasP.push(materiaPrim);
-        });
-        setMateriasP(materiasP);
-      },
-    });
+            (materiaPrim) =>materiaPrim.setUsadaUltimoTrimestre(
+              doc.data().usadaUltimoTrimestre);
+          materiasP.push(materiaPrim);});
+        setMateriasP(materiasP);}});
 
     const productoRef = ProductoDAO.getCollection();
     const subsProducto = onSnapshot(productoRef, {
@@ -96,10 +84,10 @@ const ActualizarInventarioScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={estilos.container}>
       <Text>Lista de Productos:</Text>
       {productos.map((producto) => (
-        <View key={producto.getId} style={styles.view}>
+        <View key={producto.getId} style={estilos.view}>
           <Text>Nombre: {producto.getNombre}</Text>
           <Text>Descripción: {producto.getDescripcion}</Text>
           <Text>Precio: {producto.getPrecio}</Text>
@@ -155,7 +143,7 @@ const ActualizarInventarioScreen = () => {
 
       <Text>Lista de Materias Primas:</Text>
       {materiasP.map((materia) => (
-        <View key={materia.getId} style={styles.view}>
+        <View key={materia.getId} style={estilos.view}>
           <Text>Nombre: {materia.getNombre}</Text>
           <Text>Precio: {materia.getPrecio}</Text>
           <Text>Stock: {materia.getCantidadStock}</Text>
@@ -205,30 +193,5 @@ const ActualizarInventarioScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 35,
-    backgroundColor:"#f2e1c6",
-  },
-
-  inputGroup: {
-    flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-
-  view: {
-    backgroundColor:"#f4c67f",
-    flex: 1,
-    paddingBottom: 20,
-    paddingLeft: 15,
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-});
 
 export { ActualizarInventarioScreen };

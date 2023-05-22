@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Modal, TextInput,
+import { View, Text, Modal, TextInput,
      Picker, TouchableOpacity, Image, ScrollView, CheckBox, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { imageFunctions } from "../generalFunctions/imageFunctions";
@@ -118,8 +118,8 @@ const AgregarManualidadScreen = () => {
     }
           
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.container}>
+        <ScrollView style={estilos.containerScrollView}>
+            <View style={estilos.container}>
             
                 <TextInput placeholder="Nombre" inputMode="text"
                     onChangeText={(value) => handleChangeText("nombre", value)} 
@@ -150,7 +150,7 @@ const AgregarManualidadScreen = () => {
                     <Text style={estilos.buttonText}>Seleccionar Imagen</Text>
                 </TouchableOpacity>
                 
-                <View style={styles.imageContainer}>
+                <View >
                     {image && <Image source={{uri: image.uri}} style={{width: 150, height: 150, alignSelf:"center", marginBottom:10}}/>}
                 </View>
         
@@ -185,11 +185,3 @@ const AgregarManualidadScreen = () => {
 }
 
 export { AgregarManualidadScreen };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 10,
-      backgroundColor:"#f2e1c6",
-    }
-});

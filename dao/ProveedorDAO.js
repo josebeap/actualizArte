@@ -1,5 +1,5 @@
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc,  updateDoc } from "firebase/firestore";
 import { Proveedor } from "../models/ProveedorModel";
 
 class ProveedorDAO {

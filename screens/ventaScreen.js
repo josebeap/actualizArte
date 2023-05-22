@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  
-  } from "react-native";
+import {View,Text,TextInput,FlatList,TouchableOpacity,} from "react-native";
 import { VentaDAO } from "../dao/VentaDAO";
 import { Venta } from "../models/VentaModel";
 import { FIRESTORE_DB } from "../persistence/firebase/Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,Timestamp } from "firebase/firestore";
 import estilos from "../style sheets/estilos";
 import { useNavigation } from '@react-navigation/native';
-import { Timestamp } from 'firebase/firestore';
-// Creacion de la venta
+
+
 const VentaScreen = () => {
   const [venta, setVenta] = useState([]);
-  //definimos los atributos de la venta
   const [fecha, setFecha] = useState(new Date().toLocaleDateString()); // obtener la fecha actual y darle formato
   const [nombreCliente, setNombreCliente] = useState(
     "Ingresa el nombre del cliente"
@@ -52,7 +43,7 @@ const VentaScreen = () => {
     return options;
   };
 
-  //guardado de la venta nueva en la base
+  //guardado venta nueva en la base
   const GuardarVenta = async () => {
     const options = await getOption();
     console.log(options)
@@ -70,18 +61,12 @@ const VentaScreen = () => {
   
         navigation.goBack();
       } catch (error) {
-        // manejar el error
         console.error(error);
       }
     }
   };
 
-  const fechaValida = async(options) => {
-    
-  }
-
-
-  //obtenemos los productos desde la base
+  //porque debemos obtenemos los productos desde la base
   useEffect(() => {
     const fetchProductos = async () => {
       const querySnapshot = await getDocs(collection(FIRESTORE_DB, "Producto"));
@@ -122,7 +107,6 @@ const VentaScreen = () => {
     return cleanedDict;
   }
 
-  //Calculo del precio de la venta
   const calcularPrecioVenta = () => {
     let total = 0;
     for (let i in productosAVender) {
@@ -139,7 +123,6 @@ const VentaScreen = () => {
     limpiarDiccionario(productosAVender);
   };
 
-  //renderizacion del diccionario con los productos filtrados
   const renderProductosSeleccionados = ({ item }) => {
     console.log(productosAVender);
     return (
@@ -152,7 +135,7 @@ const VentaScreen = () => {
             keyboardType="numeric"
             value={productosAVender[item.nombre][0] || ""}
             onChangeText={(text) => {
-              // Verificar si el texto ingresado es un número
+              
               if (/^\d+$/.test(text) || text === "") {
                 setproductosAVender((prevState) => ({
                   ...prevState,
@@ -191,7 +174,7 @@ const VentaScreen = () => {
             value={documentoCliente}
             onFocus={() => setDocumentoCliente("")}
             onChangeText={(text) => {
-              // Verificar si el texto ingresado es un número
+              
               if (/^\d+$/.test(text) || text === "") {
                 setDocumentoCliente(text);
               }
@@ -206,9 +189,9 @@ const VentaScreen = () => {
             
             value={busqueda}
             onChangeText={(texto) => {
-              // Filtrar solo letras
+              
               let textoFiltrado = texto.replace(/[^a-zA-Z]/g, "");
-              // Actualizar el estado de busqueda
+              
               setBusqueda(textoFiltrado.toString());
             }}
             keyboardType="default"
@@ -242,59 +225,5 @@ const VentaScreen = () => {
     
   );
 };
-
-const styles = StyleSheet.create({
-  containerList: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "grey",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 16,
-    marginBottom: 16,
-  },
-  form: {
-    marginBottom: 16,
-  },
-  label: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
-    marginRight: 16,
-  },
-  input: {
-    height: 40,
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    padding: 8,
-    marginRight: 16,
-  },
-  button: {
-    backgroundColor: "blue",
-    padding: 12,
-    borderRadius: 4,
-    width: "100%",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  totalText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 16,
-  },
-});
 
 export { VentaScreen };

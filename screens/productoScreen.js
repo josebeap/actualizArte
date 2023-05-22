@@ -1,12 +1,11 @@
 import  React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity} from "react-native";
+import { View, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { FIRESTORE_DB } from '../persistence/firebase/Firebase';
-import { QuerySnapshot, addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { async } from "@firebase/util";
+import {  collection, deleteDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import estilos from "../style sheets/estilos";
 
 const ProductoScreen = () => {
-// definicion los estados  a los componentes de la vista
     const [recursos, setRecursos] = useState([])
     const [recurso, setRecurso] = useState({
         nombre: '',
@@ -14,7 +13,6 @@ const ProductoScreen = () => {
         cantidadStock: ''
     });
 
-    /* Obtener informacion de firebase*/
     useEffect(() => {
         const recursoRef = collection(FIRESTORE_DB, 'Recurso');
 
@@ -35,23 +33,20 @@ const ProductoScreen = () => {
         return () => subscriber()
     }, [])
  
-    /* funcion para mandarle la informacion a la FlatList */
+    /*para mandarle la informacion a la FlatList */
     const renderRecurso = ({item}) => {
 
         const ref = doc(FIRESTORE_DB, `Recurso/${item.id}`);
 
-        /* suma 10000 al precio al apretar en el icono */
+        /* se debe sumar 10000 al precio al apretar en el icono */
         const toggleDone = async() => {
             let precio = {precio: item.precio};
             precio = Number.parseFloat(precio.precio) + 10000;
             updateDoc(ref, {precio: precio});
         }
-
-        /* elimina el recurso */
         const deleteItem = async() => {
            deleteDoc(ref);
         }
-
         return (
             <View>
                 <TouchableOpacity onPress={toggleDone}>
@@ -69,7 +64,7 @@ const ProductoScreen = () => {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={estilos.containerScrollView}>
             <View> 
                 <FlatList data={recursos} renderItem={renderRecurso} keyExtractor={recurso.id}/>
             </View>
@@ -77,20 +72,5 @@ const ProductoScreen = () => {
         );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 35,
-        backgroundColor:"#f2e1c6",
-    },
-
-    inputGroup: {
-        flex: 1,
-        padding: 0,
-        marginBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
-    }
-})
 
 export {ProductoScreen}
