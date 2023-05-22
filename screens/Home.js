@@ -7,14 +7,6 @@ const Home = (props) => {
   };
   return (
     <ScrollView style={styles.container}>
-     
-
-      <TouchableOpacity
-      style={estilos.botonHome}
-      onPress={() => handleProps("Categoria")}
-      >
-        <Text style={estilos.buttonText}>CATEGORIA</Text>
-      </TouchableOpacity>
 
       <TouchableOpacity
       style={estilos.botonHome}
@@ -28,13 +20,6 @@ const Home = (props) => {
       onPress={() => handleProps("AgregarManualidad")}
       >
         <Text style={estilos.buttonText}>AGREGAR MANUALIDAD</Text>
-      </TouchableOpacity>
-  
-      <TouchableOpacity
-      style={estilos.botonHome}
-      onPress={() => handleProps("Recurso")}
-      >
-        <Text style={estilos.buttonText}>RECURSO</Text>
       </TouchableOpacity>
  
       <TouchableOpacity
