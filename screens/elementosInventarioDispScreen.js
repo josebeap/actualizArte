@@ -94,12 +94,6 @@ const ElementosInvenDisponible = (props) => {
           <Text>Precio: {materia.getPrecio}</Text>
           <Text>Stock: {materia.getCantidadStock}</Text>
 
-          <TextInput
-            placeholder='Cantidad'
-            onChangeText={(value) => setCantStock({ cantStock: value })}
-          />
-
-
         </View>
       ))}
     </ScrollView>
